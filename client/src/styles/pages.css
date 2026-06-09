@@ -1,0 +1,83 @@
+/* LOGIN + REGISTER COMMON LAYOUT */
+
+.login-page,
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* CARD CONTAINER */
+
+.login-container,
+.register-container {
+  background: white;
+  padding: 30px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* TITLES */
+
+.login-title,
+.register-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* INPUTS */
+
+.login-input,
+.register-input,
+.register-select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* BUTTONS */
+
+.login-btn,
+.register-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #2f80ed;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.login-btn:hover,
+.register-btn:hover {
+  background-color: #1c66c7;
+}
+
+/* ERROR TEXT */
+
+.login-error,
+.register-error {
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* FOOTER LINKS */
+
+.login-footer,
+.register-footer {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-link,
+.register-link {
+  color: #2f80ed;
+  text-decoration: none;
+}

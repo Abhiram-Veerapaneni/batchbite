@@ -1,0 +1,13 @@
+.dashboard-page {
+  padding: 20px;
+}
+
+.dashboard-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.dashboard-title {
+  margin-bottom: 10px;
+}

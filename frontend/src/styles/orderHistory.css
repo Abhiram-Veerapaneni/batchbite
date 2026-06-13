@@ -1,0 +1,88 @@
+.order-history-page {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 32px 20px;
+}
+
+.order-history-page h1 {
+    margin-bottom: 28px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.order-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+
+    margin-bottom: 28px;
+
+    box-shadow:
+        0 4px 20px rgba(0,0,0,0.06);
+
+    border: 1px solid #f0f0f0;
+}
+
+.order-header {
+    padding: 24px 28px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.order-restaurant-name {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.order-meta {
+    margin-top: 8px;
+    color: #777;
+    font-size: 0.95rem;
+}
+
+.order-items {
+    padding: 20px;
+}
+
+.order-items .food-card {
+    margin-bottom: 16px;
+}
+
+.order-items .food-card:last-child {
+    margin-bottom: 0;
+}
+
+.payment-details {
+    border-top: 1px solid #f3f3f3;
+
+    padding: 20px 28px;
+
+    background: #fafafa;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 14px;
+}
+
+.payment-row:last-child {
+    margin-bottom: 0;
+
+    padding-top: 14px;
+
+    border-top: 1px dashed #ddd;
+
+    font-size: 1.15rem;
+}
+
+.payment-row strong {
+    font-weight: 700;
+}

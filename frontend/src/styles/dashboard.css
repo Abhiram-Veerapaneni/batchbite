@@ -1,0 +1,36 @@
+.dashboard-content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px;
+}
+
+.section-heading {
+    margin: 30px 0 20px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.featured-section,
+.restaurant-section {
+    margin-top: 40px;
+}
+
+.empty-search {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.empty-search-icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+
+.empty-search p {
+    color: gray;
+}

@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { CartContext } from "../context/CartContext";
 import FoodCard from "../components/FoodCard";
 
+import { formatTime } from "../utils/timeUtils";
+
 const API_URL = import.meta.env.VITE_API_URL;
 const DELIVERY_CHARGE = 50;
 
@@ -27,6 +29,11 @@ const Cart = () => {
             try {
                 const res = await axios.get(`${API_URL}/slots`);
                 setSlots(res.data);
+                
+                // set first slot
+                if (res.data.length > 0) {
+                    setSelectedSlot(res.data[0]._id);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -112,6 +119,11 @@ const Cart = () => {
         }
     };
 
+    // to display total orders
+    const selectedSlotData = slots.find(
+        (slot) => slot._id === selectedSlot
+    );
+
     return (
         <div className="cart-page">
             {/* Header */}
@@ -144,12 +156,8 @@ const Cart = () => {
                             showRestaurant={true}
                             showRegion={false}
                             showVegChip={true}
-                            onIncrease={() =>
-                                increaseQuantity(item.itemId)
-                            }
-                            onDecrease={() =>
-                                decreaseQuantity(item.itemId)
-                            }
+                            onIncrease={() => increaseQuantity(item.itemId)}
+                            onDecrease={() => decreaseQuantity(item.itemId)}
                         />
                     ))}
 
@@ -195,26 +203,65 @@ const Cart = () => {
                     <div className="slot-section">
                         <h3>Delivery Slot</h3>
 
-                        <div className="slot-buttons">
-                            {slots.map((slot) => (
-                                <button
-                                    key={slot._id}
-                                    className={
-                                        selectedSlot === slot._id
-                                            ? "slot-button selected"
-                                            : "slot-button"
-                                    }
-                                    onClick={() =>
-                                        setSelectedSlot(
-                                            slot._id
-                                        )
-                                    }
-                                >
-                                    {slot.startTime} -{" "}
-                                    {slot.endTime}
-                                </button>
-                            ))}
+                        <div className="slot-select-container">
+
+                            <select
+                                className="slot-select"
+                                value={selectedSlot || ""}
+                                onChange={(e) => setSelectedSlot(e.target.value)}
+                            >
+
+                                {slots.map((slot) => (
+                                    <option
+                                        key={slot._id}
+                                        value={slot._id}
+                                    >
+                                        {formatTime(slot.startTime)}
+                                        {" - "}
+                                        {formatTime(slot.endTime)}
+                                    </option>
+                                ))}
+
+                            </select>
+
                         </div>
+
+                        {/* totalOrders */}
+                        {selectedSlotData && (
+                            <div className="slot-batch-info">
+
+                                <p className="slot-batch-text">
+                                    👥{" "}
+                                    {Math.min(
+                                        selectedSlotData.totalOrders + 1,
+                                        selectedSlotData.threshold
+                                    )}
+                                    /
+                                    {selectedSlotData.threshold}
+                                    {" "}orders joined
+                                </p>
+
+                                <div className="slot-mini-progress">
+
+                                    <div
+                                        className="slot-mini-progress-fill"
+                                        style={{
+                                            width: `${Math.min(
+                                                (
+                                                    (selectedSlotData.totalOrders + 1) /
+                                                    selectedSlotData.threshold
+                                                ) * 100,
+                                                100
+                                            )
+                                                }%`
+                                        }}
+                                    />
+
+                                </div>
+
+                            </div>
+                        )}
+
                     </div>
 
                     {/* Payment */}

@@ -16,6 +16,8 @@ import "./styles/restaurantDetails.css";
 import "./styles/cart.css";
 import "./styles/profile.css";
 import "./styles/orderHistory.css";
+import "./styles/slotDashboard.css"
+import "./styles/liveBatchCard.css";
 
 createRoot(document.getElementById('root')).render(
 

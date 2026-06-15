@@ -1,0 +1,99 @@
+.slot-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.slot-card {
+    background: #fff;
+    border: 2px solid #f3f3f3;
+    border-radius: 18px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    transition: all 0.25s ease;
+}
+
+.slot-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.active-slot {
+    border-color: #fc8019;
+    background: linear-gradient(
+        135deg,
+        #fff8f1 0%,
+        #fff 100%
+    );
+}
+
+.slot-card h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #222;
+}
+
+.slot-status {
+    display: inline-block;
+    margin: 0.8rem 0 1rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: #fff3e6;
+    color: #fc8019;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.slot-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.orders-count {
+    font-weight: 700;
+    color: #222;
+}
+
+.remaining-orders {
+    color: #777;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #ececec;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        #fc8019,
+        #ff9f4d
+    );
+    border-radius: inherit;
+    transition: width 0.4s ease;
+}
+
+.progress-text {
+    margin-top: 0.7rem;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.slot-full {
+    color: #d32f2f;
+    font-weight: 700;
+}
+
+.slot-live {
+    color: #2e7d32;
+    font-weight: 700;
+}

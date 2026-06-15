@@ -86,3 +86,240 @@
 .payment-row strong {
     font-weight: 700;
 }
+
+
+.empty-orders {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.empty-orders-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.empty-orders h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+.empty-orders p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.explore-food-btn {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    background-color: #ff6b00;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.explore-food-btn:hover {
+    background-color: #e65f00;
+    transform: translateY(-2px);
+}
+
+.explore-food-btn:active {
+    transform: translateY(0);
+}
+
+.order-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+}
+
+.info-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.batch-chip {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.shift-chip {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-chip {
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.status-chip.pending {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-chip.shifted {
+    background: #ede7f6;
+    color: #6a1b9a;
+}
+
+.status-chip.out_for_delivery {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-chip.delivered {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-chip.cancelled {
+    background: #ffebee;
+    color: #c62828;
+}
+
+
+
+
+/* for modify and cancel  */
+
+.order-management {
+    padding: 18px 24px 24px;
+    border-top: 1px solid #f3f3f3;
+}
+
+.order-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.modify-slot-btn,
+.cancel-order-btn,
+.save-slot-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modify-slot-btn {
+    background: #eef4ff;
+    color: #2563eb;
+}
+
+.modify-slot-btn:hover {
+    background: #dbe8ff;
+}
+
+.cancel-order-btn {
+    background: #fff1f2;
+    color: #dc2626;
+}
+
+.cancel-order-btn:hover {
+    background: #ffe4e6;
+}
+
+.save-slot-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.save-slot-btn:hover {
+    background: #1d4ed8;
+}
+
+.slot-editor {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.slot-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.slot-editor-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+}
+
+.slot-editor-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+}
+
+.slot-select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: white;
+    margin-bottom: 14px;
+}
+
+.slot-editor-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.confirm-cancel-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    background: #dc2626;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.confirm-cancel-btn:hover {
+    background: #b91c1c;
+}
+
+.cancel-confirmation-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    background: #f3f4f6;
+    color: #374151;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-confirmation-btn:hover {
+    background: #e5e7eb;
+}

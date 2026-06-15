@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Restaurants() {
     const [restaurants, setRestaurants] = useState([]);
 
@@ -9,7 +11,7 @@ function Restaurants() {
 
         const fetchRestaurants = async () => {
             const res = await axios.get(
-                "http://localhost:5000/api/restaurants"
+                `${API_URL}restaurants`
             );
             setRestaurants(res.data);
         }

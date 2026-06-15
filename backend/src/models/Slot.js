@@ -1,32 +1,40 @@
 import mongoose from "mongoose";
 
-const slotSchema = new mongoose.Schema(
-    {
-        startTime: {
-            type: String, // "08:00"
-            required: true
-        },
+const slotSchema = new mongoose.Schema({
 
-        endTime: {
-            type: String, // "08:15"
-            required: true
-        },
-
-        duration: {
-            type: Number, // 15 or 30 (admin controlled)
-            required: true,
-            default: 15
-        },
-
-        isActive: {
-            type: Boolean,
-            default: true
-        }
+    startTime: {
+        type: Date,
+        required: true
     },
-    {
-        timestamps: true
+
+    endTime: {
+        type: Date,
+        required: true
+    },
+
+
+    totalOrders: {
+        type: Number,
+        default: 0
+    },
+
+    threshold: {
+        type: Number,
+        default: 25
+    },
+
+    status: {
+        type: String,
+        enum: [
+            "open",
+            "closed",
+            "out_for_delivery",
+            "processed"
+        ],
+        default: "open"
     }
-)
+
+});
 
 const Slot = mongoose.model("Slot", slotSchema);
 

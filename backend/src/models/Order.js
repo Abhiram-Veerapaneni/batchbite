@@ -13,9 +13,9 @@ const orderItemSchema = new mongoose.Schema(
         },
 
         image: String,
-        
+
         isVeg: Boolean,
-        
+
         price: {
             type: Number,
             required: true
@@ -62,12 +62,16 @@ const orderSchema = new mongoose.Schema(
             type: String,
             enum: [
                 "pending",
-                "confirmed",
-                "preparing",
-                "ready",
-                "delivered"
+                "shifted",
+                "out_for_delivery",
+                "delivered",
+                "cancelled"
             ],
             default: "pending"
+        },
+
+        canModifyUntil: {
+            type: Date
         },
 
         paymentMethod: {
@@ -80,6 +84,11 @@ const orderSchema = new mongoose.Schema(
             type: String,
             enum: ["pending", "paid"],
             default: "pending"
+        },
+
+        shiftCount: {
+            type: Number,
+            default: 0
         }
     },
     {

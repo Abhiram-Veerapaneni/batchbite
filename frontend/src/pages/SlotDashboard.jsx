@@ -7,130 +7,193 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function SlotDashboard() {
 
-    const [slots, setSlots] = useState([]);
+    const [batchGroups, setBatchGroups] = useState([]);
 
-    const fetchSlots = async () => {
+    const fetchBatchGroups = async () => {
 
         try {
 
             const res = await axios.get(
-                `${API_URL}/slots`
+                `${API_URL}/batch-groups/current`,
+                {
+                    withCredentials: true
+                }
             );
 
-            setSlots(res.data);
+            setBatchGroups(res.data);
 
         } catch (error) {
             console.log(error);
         }
+
     };
 
-    // Auto refresh every 5 seconds
     useEffect(() => {
 
-        fetchSlots();
+        fetchBatchGroups();
+
         const interval = setInterval(
-            fetchSlots,
-            5000
+            fetchBatchGroups,
+            10000
         );
+
         return () => clearInterval(interval);
 
     }, []);
 
-    // Check if the slot is currently active
     const isCurrentSlot = (slot) => {
 
         const now = new Date();
+
         return (
             new Date(slot.startTime) <= now &&
             now < new Date(slot.endTime)
         );
+
     };
+
+    const groupedSlots = batchGroups.reduce((acc, batch) => {
+
+        const slotId = batch.slot._id;
+
+        if (!acc[slotId]) {
+
+            acc[slotId] = {
+                slot: batch.slot,
+                batches: []
+            };
+
+        }
+
+        acc[slotId].batches.push(batch);
+
+        return acc;
+
+    }, {});
 
     return (
 
         <div className="slot-dashboard">
 
-            {slots.map((slot) => {
+            {Object.values(groupedSlots).length === 0 ? (
 
-                const percentage = Math.min(
-                    (slot.totalOrders / slot.threshold) * 100,
-                    100
-                );
+                <div className="slot-card">
+                    <p>No active batch groups</p>
+                </div>
 
-                const ordersLeft = Math.max(
-                    slot.threshold - slot.totalOrders,
-                    0
-                );
+            ) : (
 
-                return (
+                Object.values(groupedSlots).map(
+                    ({ slot, batches }) => (
 
-                    <div
-                        key={slot._id}
-                        className={
-                            isCurrentSlot(slot)
-                                ? "slot-card active-slot"
-                                : "slot-card"
-                        }
-                    >
+                        <div
+                            key={slot._id}
+                            className={
+                                isCurrentSlot(slot)
+                                    ? "slot-card active-slot"
+                                    : "slot-card"
+                            }
+                        >
 
-                        <h2>
-                            {formatTime(slot.startTime)}
-                            {" - "}
-                            {formatTime(slot.endTime)}
-                        </h2>
+                            <h2>
+                                {formatTime(slot.startTime)}
+                                {" - "}
+                                {formatTime(slot.endTime)}
+                            </h2>
 
-                        {isCurrentSlot(slot) && (
+                            {isCurrentSlot(slot) && (
+                                <div className="slot-status">
+                                    🔥 Live Batch
+                                </div>
+                            )}
 
-                            <div className="slot-status">
-                                🔥 Live Batch
-                            </div>
+                            {batches.map((batch) => {
 
-                        )}
+                                const percentage = Math.min(
+                                    (batch.totalOrders /
+                                        batch.threshold) *
+                                    100,
+                                    100
+                                );
 
-                        <div className="slot-stats">
+                                const ordersLeft = Math.max(
+                                    batch.threshold -
+                                    batch.totalOrders,
+                                    0
+                                );
 
-                            <span className="orders-count">
+                                return (
 
-                                {slot.totalOrders}
-                                /
-                                {slot.threshold}
-                                {" "}Orders
+                                    <div
+                                        key={batch._id}
+                                        className="region-section"
+                                    >
 
-                            </span>
+                                        <h4>
+                                            {
+                                                batch.restaurantZone
+                                                    ?.name
+                                            }
+                                        </h4>
 
-                            <span className="remaining-orders">
+                                        <div className="slot-stats">
 
-                                {ordersLeft > 0
-                                    ? `${ordersLeft} left`
-                                    : "Full"
-                                }
+                                            <span>
+                                                {
+                                                    batch.totalOrders
+                                                }
+                                                /
+                                                {
+                                                    batch.threshold
+                                                }
+                                                {" "}Orders
+                                            </span>
 
-                            </span>
+                                            <span>
+                                                {
+                                                    ordersLeft > 0
+                                                        ? `Need ${ordersLeft} more`
+                                                        : "Full"
+                                                }
+                                            </span>
+
+                                        </div>
+
+                                        <div className="progress-bar">
+
+                                            <div
+                                                className="progress-fill"
+                                                style={{
+                                                    width:
+                                                        `${percentage}%`
+                                                }}
+                                            />
+
+                                        </div>
+
+                                        <div className="progress-text">
+
+                                            {
+                                                percentage.toFixed(
+                                                    0
+                                                )
+                                            }
+                                            % Filled
+
+                                        </div>
+
+                                    </div>
+
+                                );
+
+                            })}
 
                         </div>
 
-                        <div className="progress-bar">
+                    )
+                )
 
-                            <div
-                                className="progress-fill"
-                                style={{
-                                    width: `${percentage}%`
-                                }}
-                            />
-
-                        </div>
-
-                        <div className="progress-text">
-
-                            {percentage.toFixed(0)}% Filled
-
-                        </div>
-
-                    </div>
-
-                );
-
-            })}
+            )}
 
         </div>
 

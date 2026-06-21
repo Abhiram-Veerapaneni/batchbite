@@ -1,12 +1,14 @@
 import Restaurant from "../models/Restaurant.js";
 
-// get all restaurants (filtered by uni/region)
+// get all restaurants (filtered by uni/zone)
 
 export const getRestaurants = async (req, res) => {
 
     try {
 
-        const restaurants = await Restaurant.find();
+        const restaurants = await Restaurant
+                                    .find()
+                                    .populate("zone")
         res.json(restaurants);
 
     } catch (error) {
@@ -19,7 +21,9 @@ export const getRestaurantById = async (req, res) => {
 
     try {
 
-        const restaurant = await Restaurant.findById(req.params.id);
+        const restaurant = await Restaurant
+                                    .findById(req.params.id)
+                                    .populate("zone")
 
         if (!restaurant) {
             return res.status(404).json({

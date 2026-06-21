@@ -24,6 +24,10 @@ const orderItemSchema = new mongoose.Schema(
         quantity: {
             type: Number,
             default: 1
+        },
+
+        restaurantName: {
+            type: String
         }
     },
     {
@@ -39,18 +43,22 @@ const orderSchema = new mongoose.Schema(
             required: true
         },
 
-        restaurant: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Restaurant",
-            required: true
-        },
-
         items: [orderItemSchema],
 
         slot: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Slot",
             required: true
+        },
+
+        deliveryZone: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Zone"
+        },
+
+        restaurantZone: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Zone"
         },
 
         totalAmount: {
@@ -71,7 +79,8 @@ const orderSchema = new mongoose.Schema(
         },
 
         canModifyUntil: {
-            type: Date
+            type: Date,
+            default: null
         },
 
         paymentMethod: {
@@ -89,6 +98,12 @@ const orderSchema = new mongoose.Schema(
         shiftCount: {
             type: Number,
             default: 0
+        },
+
+        batch: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Batch",
+            default: null
         }
     },
     {

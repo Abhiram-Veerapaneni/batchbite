@@ -11,6 +11,8 @@ import orderRoutes from "./routes/orderRoutes.js";
 import slotRoutes from "./routes/slotRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import zoneRoutes from "./routes/zoneRoutes.js";
+import batchGroupRoutes from "./routes/batchGroupRoutes.js";
 
 const app = express();
 
@@ -41,4 +43,9 @@ app.use("/api/slots", slotRoutes);
 app.use("/api/search", searchRoutes);
 
 app.use("/api/cart", cartRoutes);
+
+app.use("/api/zones", zoneRoutes);
+
+app.use("/api/batch-groups", batchGroupRoutes);
+
 export default app;

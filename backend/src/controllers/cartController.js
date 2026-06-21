@@ -5,7 +5,10 @@ export const getCart = async (req, res) => {
 
     try {
 
-        let cart = await Cart.findOne({ user: req.user._id });
+        let cart = await Cart.findOne({ 
+            user: req.user._id 
+        }).populate("restaurantZone")
+
         res.json(cart);
 
     } catch (error) {
@@ -20,19 +23,24 @@ export const addToCart = async (req, res) => {
 
     try {
 
-        const { item, restaurantId } = req.body;
+        const { item } = req.body;
 
-        let cart = await Cart.findOne({ user: req.user._id });
+        let cart = await Cart.findOne({ user: req.user._id }).populate("restaurantZone");
 
-        // different restaurant -> clear old cart
-        if (!cart.restaurant || cart.restaurant.toString() !== restaurantId) {
-
-            if (cart.restaurant) {
-                cart.items = [];
-            }
-
-            cart.restaurant = restaurantId;
+        if(!cart.restaurantZone) {
+            cart.restaurantZone = item.restaurantZone;
         }
+
+        // different restaurant zone -> error
+        if (!cart.restaurantZone._id || cart.restaurantZone._id.toString() !== item.restaurantZone._id) {
+
+            return res.status(400).json({
+                message: `You can only order from restaurants in zone ${cart.restaurantZone.name}. 
+                            Please clear your cart to add a different`
+            })   
+        }
+
+        
 
         // find existing item
         const existingItem = cart.items.find(
@@ -116,12 +124,11 @@ export const decreaseQuantity = async (req, res) => {
                 (i) => i.itemId.toString() !== req.params.itemId
             )
         } else {
-
             item.quantity--;
         }
 
         if (cart.items.length == 0) {
-            cart.restaurant = null;
+            cart.restaurantZone = null;
         }
 
         await cart.save();
@@ -144,7 +151,8 @@ export const clearCart = async (req, res) => {
 
 
         cart.items = [];
-        cart.restaurant = null;
+        cart.restaurantZone = null;
+
         await cart.save();
         res.json({
             message: "Cart cleared"

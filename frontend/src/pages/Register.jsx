@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../services/authService";
 
 import toast from "react-hot-toast";
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Register() {
 
@@ -14,9 +17,29 @@ function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [university, setUniversity] = useState("VIT AP");
+    const [address, setAddress] = useState({
+        addressLine: "",
+        zone: ""
+    });
     const [role, setRole] = useState("student");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const [zones, setZones] = useState([]);
+
+    useEffect(() => {
+
+        const fetchZones = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/zones`);
+                setZones(res.data);
+            } catch (err) {
+                setError(err?.response?.data?.message || "Registration failed");
+            }
+        }
+
+        fetchZones();
+    }, []);
 
     const handleSubmit = async (e) => {
 
@@ -26,9 +49,10 @@ function Register() {
             name,
             email,
             password,
+            confirmPassword,
             university,
             role,
-            confirmPassword
+            address
         };
 
         // backend API call
@@ -81,6 +105,33 @@ function Register() {
                         <option value="KL University">KL University</option>
                         <option value="SRM AP">SRM AP</option>
                     </select>
+
+                    <input
+                        className="register-input"
+                        type="text"
+                        placeholder="Address Line"
+                        value={address.addressLine}
+                        onChange={(e) => setAddress({ ...address, addressLine: e.target.value })}
+                    />
+
+                    <select
+                        className="register-select"
+                        value={address.zone}
+                        onChange={(e) => setAddress({ ...address, zone: e.target.value })}
+                    >
+
+                        {
+                            zones.map((zone) => {
+                                return (
+                                    <option key={zone._id} value={zone._id}>
+                                        {zone.name}
+                                    </option>
+                                );
+                            })
+                        }
+
+                    </select>
+
 
                     <select
                         className="register-select"

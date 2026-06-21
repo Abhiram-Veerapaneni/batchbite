@@ -1,24 +1,33 @@
+import BatchGroup from "../models/BatchGroup.js";
 import Order from "../models/Order.js";
 import Slot from "../models/Slot.js";
+
+import {
+    incrementBatchGroup,
+    decrementBatchGroup,
+    moveOrderBetweenBatchGroup,
+} from "../services/batchGroupService.js";
 
 // Create order
 export const createOrder = async (req, res) => {
     try {
 
         const {
-            restaurant,
+            restaurantZone,
             items,
             slot,
+            deliveryZone,
             totalAmount,
             paymentMethod
         } = req.body;
 
         // Validation
         if (
-            !restaurant ||
+            !restaurantZone ||
             !Array.isArray(items) ||
             items.length === 0 ||
             !slot ||
+            !deliveryZone ||
             totalAmount == null ||
             !paymentMethod
         ) {
@@ -28,18 +37,10 @@ export const createOrder = async (req, res) => {
         }
 
         // Payment status
-        const paymentStatus =
-            paymentMethod === "upi"
-                ? "paid"
-                : "pending";
+        const paymentStatus = (paymentMethod === "upi") ? "paid" : "pending";
 
-
-        // find slot and increase total orders
-        const slotDoc = await Slot.findByIdAndUpdate(
-            slot,
-            { $inc: { totalOrders: 1 } },
-            { new: true }
-        );
+        // find slot 
+        const slotDoc = await Slot.findById(slot);
 
         if (!slotDoc) {
             return res.status(404).json({ message: "Slot not found" });
@@ -48,22 +49,25 @@ export const createOrder = async (req, res) => {
         // Create order
         const order = await Order.create({
             user: req.user._id,
-            restaurant,
+            restaurantZone,
             items: items.map((item) => ({
                 itemId: item.itemId,
                 name: item.name,
                 image: item.image,
                 isVeg: item.isVeg,
                 price: item.price,
-                quantity: item.quantity
+                quantity: item.quantity,
+                restaurantName: item.restaurantName,
             })),
             slot,
+            deliveryZone,
             totalAmount,
             canModifyUntil: slotDoc.startTime.getTime() + 5 * 60 * 1000,
             paymentMethod,
             paymentStatus
         });
 
+        await incrementBatchGroup(order, slotDoc);
 
         res.status(201).json({
             message: "Order created successfully",
@@ -85,7 +89,8 @@ export const getMyOrders = async (req, res) => {
             user: req.user._id
         })
             .populate("slot")
-            .populate("restaurant")
+            .populate("deliveryZone")
+            .populate("restaurantZone")
             .sort({ createdAt: -1 });
 
         res.json(orders);
@@ -129,10 +134,7 @@ export const modifySlot = async (req, res) => {
             })
         }
 
-        // oldSlot
         const oldSlot = await Slot.findById(order.slot);
-
-        // newSlot
         const newSlot = await Slot.findById(slotId);
 
         if (!newSlot) {
@@ -141,18 +143,19 @@ export const modifySlot = async (req, res) => {
             })
         }
 
-        // update totalorders
-        oldSlot.totalOrders--;
-        newSlot.totalOrders++;
-
         await oldSlot.save();
         await newSlot.save();
+
+        // update totalOrders in old BatchGroup
+        await decrementBatchGroup(order);
+
+        // shift into new BatchGroup
+        await moveOrderBetweenBatchGroup(order, newSlot);
 
         // move order
         order.slot = slotId;
         order.canModifyUntil = newSlot.startTime.getTime() + 5 * 60 * 1000
         order.shiftCount++;
-
         await order.save();
 
         res.status(200).json({
@@ -202,16 +205,9 @@ export const cancelOrder = async (req, res) => {
 
         await order.save();
 
-        // decrease total orders
-        await Slot.findByIdAndUpdate(
-            order.slot,
-            {
-                $inc: {
-                    totalOrders: -1
-                }
-            }
-        );
-        
+        // decrease total orders in BatchGroup
+        await decrementBatchGroup(order);
+
         return res.status(200).json({
             message: "Order cancelled successfully"
         });

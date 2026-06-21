@@ -9,7 +9,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const CartProvider = ({ children }) => {
 
     const [cart, setCart] = useState([]);
-    const [restaurantId, setRestaurantId] = useState(null);
+    // const [restaurantId, setRestaurantId] = useState(null); 
+
+    const [restaurantZone, setRestaurantZone] = useState(null);
 
     const fetchCart = async () => {
 
@@ -23,7 +25,7 @@ export const CartProvider = ({ children }) => {
             );
             
             setCart(res.data.items || []);
-            setRestaurantId(res.data.restaurant || null);
+            setRestaurantZone(res.data.restaurantZone || null);
             
         } catch (error) {
             console.log(error);
@@ -35,15 +37,14 @@ export const CartProvider = ({ children }) => {
         fetchCart();
     }, []);
 
-    const addToCart = async (item, restId) => {
+    const addToCart = async (item) => {
 
         try {
 
             await axios.post(
                 `${API_URL}/cart/add`,
                 {
-                    item,
-                    restaurantId: restId
+                    item
                 },
                 {
                     withCredentials: true
@@ -119,7 +120,7 @@ export const CartProvider = ({ children }) => {
             );
 
             setCart([]);
-            setRestaurantId(null);
+            setRestaurantZone(null);
 
         } catch (error) {
             console.log(error);
@@ -132,7 +133,7 @@ export const CartProvider = ({ children }) => {
         <CartContext.Provider
             value={{
                 cart,
-                restaurantId,
+                restaurantZone,
                 addToCart,
                 increaseQuantity,
                 decreaseQuantity,

@@ -101,8 +101,8 @@ function RestaurantDetails() {
                         {restaurant.name}
                     </h1>
 
-                    <p className="restaurant-region">
-                        {restaurant.region}
+                    <p className="restaurant-zone">
+                        {restaurant.zone.name}
                     </p>
 
                 </div>
@@ -183,10 +183,10 @@ function RestaurantDetails() {
                                             // Prevent card click navigation
                                             e.stopPropagation();
 
-                                            addToCart(
-                                                item,
-                                                restaurant._id
-                                            );
+                                            addToCart({
+                                                ...item, 
+                                                restaurantZone: restaurant.zone
+                                            });
                                         }}
                                     >
                                         Add

@@ -6,7 +6,7 @@ function FoodCard({
     layout = "vertical",
 
     showRestaurant = true,
-    showRegion = true,
+    showZone = true,
     showVegChip = true,
 
     showControls = false,
@@ -56,9 +56,9 @@ function FoodCard({
                 }
 
                 {
-                    showRegion &&
-                    <p className="food-card-region">
-                        {item.region}
+                    showZone &&
+                    <p className="food-card-zone">
+                        {item.restaurantZone.name}
                     </p>
                 }
 

@@ -45,7 +45,7 @@ export const search = async (req, res) => {
 
                         restaurantId: restaurant._id,
                         restaurantName: restaurant.name,
-                        region: restaurant.region
+                        restaurantZone: restaurant.zone
                     });
                 }
             })

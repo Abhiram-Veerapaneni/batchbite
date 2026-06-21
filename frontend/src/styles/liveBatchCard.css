@@ -1,55 +1,79 @@
-.live-batch-card {
-    background: #fff8f1;
-    border: 2px solid #ffd8b5;
-    border-radius: 18px;
-    padding: 1rem 1.2rem;
-    margin-bottom: 1.25rem;
+.live-batches-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
 .live-batch-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 16px;
 }
 
 .live-batch-title {
     font-size: 1rem;
     font-weight: 700;
-    color: #fc8019;
 }
 
-.view-slots-link {
-    color: #fc8019;
-    text-decoration: none;
-    font-size: 0.9rem;
+.batch-group-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.batch-group-item:last-child {
+    border-bottom: none;
+}
+
+.batch-group-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.batch-group-zone {
     font-weight: 600;
 }
 
-.live-batch-time {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 0.5rem;
+.batch-status {
+    font-size: 0.85rem;
 }
 
-.live-batch-count {
+.batch-status.live {
+    color: #e53935;
+}
+
+.batch-status.upcoming {
+    color: #fb8c00;
+}
+
+.batch-group-time {
+    margin-top: 6px;
+    color: #666;
     font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 0.75rem;
+}
+
+.batch-group-count {
+    margin-top: 10px;
+    font-size: 0.95rem;
 }
 
 .live-batch-progress {
-    width: 100%;
+    margin-top: 8px;
     height: 8px;
-    background: #ffe7d1;
+    background: #eee;
     border-radius: 999px;
     overflow: hidden;
 }
 
 .live-batch-progress-fill {
     height: 100%;
-    background: #fc8019;
-    border-radius: inherit;
+    background: linear-gradient(
+        90deg,
+        #f97316,
+        #ea580c
+    );
     transition: width 0.3s ease;
 }

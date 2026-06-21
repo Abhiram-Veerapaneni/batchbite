@@ -8,54 +8,21 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function LiveBatchCard() {
 
-    const [batchSlot, setBatchSlot] = useState(null);
+    const [batchData, setBatchData] = useState(null);
 
-    const fetchBatch = async () => {
+    const fetchBatchGroups = async () => {
 
         try {
 
             const res = await axios.get(
-                `${API_URL}/slots`
+                `${API_URL}/batch-groups/live`,
+                {
+                    withCredentials: true
+                }
             );
+            console.log(res.data);
 
-            const slots = res.data;
-
-            const now = new Date();
-
-            // Current live batch
-            const currentSlot = slots.find(
-                (slot) =>
-                    new Date(slot.startTime) <= now &&
-                    now < new Date(slot.endTime)
-            );
-
-            if (currentSlot) {
-                setBatchSlot({
-                    ...currentSlot,
-                    isLive: true
-                });
-
-                return;
-            }
-
-            // Next upcoming batch
-            const nextSlot = slots.find(
-                (slot) =>
-                    new Date(slot.startTime) > now
-            );
-
-            if (nextSlot) {
-
-                setBatchSlot({
-                    ...nextSlot,
-                    isLive: false
-                });
-
-            } else {
-
-                setBatchSlot(null);
-
-            }
+            setBatchData(res.data);
 
         } catch (error) {
 
@@ -67,10 +34,10 @@ function LiveBatchCard() {
 
     useEffect(() => {
 
-        fetchBatch();
+        fetchBatchGroups();
 
         const interval = setInterval(
-            fetchBatch,
+            fetchBatchGroups,
             5000
         );
 
@@ -78,32 +45,22 @@ function LiveBatchCard() {
 
     }, []);
 
-    if (!batchSlot) {
+    if (!batchData) {
         return null;
     }
 
-    const joined = Math.min(
-        batchSlot.totalOrders,
-        batchSlot.threshold
-    );
-
-    const percentage = Math.min(
-        (joined / batchSlot.threshold) * 100,
-        100
-    );
+    if(batchData.batchGroups.length == 0) return null;
 
     return (
-
-        <div className="live-batch-card">
+        <div className="live-batches-card">
 
             <div className="live-batch-header">
 
                 <span className="live-batch-title">
 
-                    {batchSlot.isLive
-                        ? "🔥 Live Batch"
-                        : "🚚 Next Delivery Batch"
-                    }
+                    {batchData.isCurrent
+                        ? "🔥 Current Slot"
+                        : "⏳ Next Slot"}
 
                 </span>
 
@@ -116,36 +73,77 @@ function LiveBatchCard() {
 
             </div>
 
-            <div className="live-batch-time">
+            <div className="batch-slot-time">
 
-                {formatTime(batchSlot.startTime)}
+                {formatTime(batchData.slot.startTime)}
                 {" - "}
-                {formatTime(batchSlot.endTime)}
+                {formatTime(batchData.slot.endTime)}
 
             </div>
 
-            <div className="live-batch-count">
+            {batchData.batchGroups.length === 0 ? (
 
-                👥 {joined}/
-                {batchSlot.threshold}
-                {" "}students joined
+                <div className="empty-batch-state">
 
-            </div>
+                    No active batches yet.
+                    Be the first student to join!
 
-            <div className="live-batch-progress">
+                </div>
 
-                <div
-                    className="live-batch-progress-fill"
-                    style={{
-                        width: `${percentage}%`
-                    }}
-                />
+            ) : (
 
-            </div>
+                batchData.batchGroups.map((batchGroup) => {
+
+                    const joined = Math.min(
+                        batchGroup.totalOrders,
+                        batchGroup.threshold
+                    );
+
+                    const percentage = Math.min(
+                        (joined / batchGroup.threshold) * 100,
+                        100
+                    );
+
+                    return (
+
+                        <div
+                            key={batchGroup._id}
+                            className="batch-group-item"
+                        >
+
+                            <div className="batch-group-top">
+
+                                <div className="batch-group-zone">
+                                    {batchGroup.restaurantZone?.name}
+                                </div>
+
+                                <div className="batch-group-count">
+                                    {joined}/{batchGroup.threshold}
+                                </div>
+
+                            </div>
+
+                            <div className="live-batch-progress">
+
+                                <div
+                                    className="live-batch-progress-fill"
+                                    style={{
+                                        width: `${percentage}%`
+                                    }}
+                                />
+
+                            </div>
+
+                        </div>
+
+                    );
+
+                })
+
+            )}
 
         </div>
-
-    );
+    )
 
 }
 

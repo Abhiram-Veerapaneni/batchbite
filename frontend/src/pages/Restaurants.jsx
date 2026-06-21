@@ -31,7 +31,7 @@ function Restaurants() {
                         <h3>{r.name}</h3>
                     </Link>
 
-                    <p>Region: {r.region}</p>
+                    <p>Zone: {r.zone}</p>
 
                 </div>
             ))}

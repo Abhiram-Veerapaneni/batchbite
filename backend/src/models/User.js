@@ -35,6 +35,17 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
+    address : {
+      addressLine : {
+        type: String,
+        required: true
+      },
+      zone : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref: "Zone"
+      }
+    },
+
     isVerified: {
       type: Boolean,
       default: false

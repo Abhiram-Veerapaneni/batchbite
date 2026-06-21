@@ -12,9 +12,10 @@ const registerUser = async (req, res) => {
             name,
             email,
             password,
+            confirmPassword,
             university,
             role,
-            confirmPassword
+            address
         } = req.body;
 
         // check if user exists
@@ -38,13 +39,15 @@ const registerUser = async (req, res) => {
             email,
             password,
             role,
-            university
+            university,
+            address
         });
 
         // Create cart for user
         await Cart.create({
             user: user._id,
-            items: []
+            items: [],
+            restaurantZone: null
         });
 
         // generate JWT cookie
@@ -55,12 +58,12 @@ const registerUser = async (req, res) => {
             name: user.name,
             email: user.email,
             role: user.role,
-            university: user.university
+            university: user.university,
+            address: user.address
         });
 
     } catch (error) {
-        console.error("REGISTER ERROR:");
-        console.error(error);
+        console.error("REGISTER ERROR");
 
         res.status(500).json({
             message: error.message

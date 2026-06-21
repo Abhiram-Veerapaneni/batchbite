@@ -8,7 +8,7 @@ export const getMenuItemById = async (req, res) => {
 
         const restaurant = await Restaurant.findOne({
             "menu._id": id
-        })
+        }).populate("zone")
 
 
         if (!restaurant) {
@@ -27,7 +27,7 @@ export const getMenuItemById = async (req, res) => {
             // Additional details needed by frontend
             restaurantId: restaurant._id,
             restaurantName: restaurant.name,
-            region: restaurant.region
+            restaurantZone: restaurant.zone,
         })
 
     } catch (error) {

@@ -24,8 +24,8 @@ function RestaurantCard({ restaurant }) {
           {restaurant.name}
         </h3>
 
-        <p className="restaurant-card-region">
-          {restaurant.region}
+        <p className="restaurant-card-zone">
+          {restaurant.zone.name}
         </p>
 
       </div>

@@ -49,14 +49,9 @@ const restaurantSchema = new mongoose.Schema(
             required: true
         },
 
-        universities: {
-            type: [String],
-            required: true
-        },
-
-        region: {
-            type: String,
-            required: true
+        zone: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Zone"
         },
 
         menu: [menuItemSchema]

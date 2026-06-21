@@ -12,12 +12,6 @@ const slotSchema = new mongoose.Schema({
         required: true
     },
 
-
-    totalOrders: {
-        type: Number,
-        default: 0
-    },
-
     threshold: {
         type: Number,
         default: 25

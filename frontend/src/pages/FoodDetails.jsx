@@ -79,8 +79,8 @@ function FoodDetails() {
                         Restaurant: {foodItem.restaurantName}
                     </p>
 
-                    <p className="food-details-region">
-                        Region: {foodItem.region}
+                    <p className="food-details-zone">
+                        Zone: {foodItem.restaurantZone.name}
                     </p>
 
                     <p className="food-details-type">
@@ -90,10 +90,7 @@ function FoodDetails() {
                     <button
                         className="add-to-cart-btn"
                         onClick={() =>
-                            addToCart(
-                                foodItem,
-                                foodItem.restaurantId
-                            )
+                            addToCart(foodItem)
                         }
                     >
                         Add To Cart

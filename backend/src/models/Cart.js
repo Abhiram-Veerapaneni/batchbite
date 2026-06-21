@@ -43,9 +43,9 @@ const cartSchema = new mongoose.Schema(
             unique: true
         }, 
 
-        restaurant: {
+        restaurantZone : {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Restaurant"
+            ref: "Zone"
         },
 
         items: [cartItemSchema]

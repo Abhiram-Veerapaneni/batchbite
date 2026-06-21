@@ -13,18 +13,18 @@ const generateSlots = async () => {
     // today
     let current = new Date();
 
-    current.setHours(19, 0, 0, 0);
+    current.setHours(12, 15, 0, 0);
 
     const closingTime = new Date();
 
-    closingTime.setHours(20, 0, 0, 0);
+    closingTime.setHours(13, 0, 0, 0);
 
     while (current < closingTime) {
 
         const startTime = new Date(current);
 
         current.setMinutes(
-            current.getMinutes() + 15
+            current.getMinutes() + 8
         );
 
         const endTime = new Date(current);
@@ -34,8 +34,6 @@ const generateSlots = async () => {
             startTime,
 
             endTime,
-
-            totalOrders: 0,
 
             threshold: 5,
 

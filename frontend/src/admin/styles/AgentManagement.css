@@ -1,0 +1,665 @@
+/* Page */
+
+.agent-page{
+    min-height:100vh;
+    background:#f8f8f8;
+    padding:28px;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+/* Header */
+
+.agent-page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+    gap:20px;
+}
+
+.agent-page-title{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+    color:#282c3f;
+}
+
+.agent-page-subtitle{
+    margin-top:6px;
+    color:#686b78;
+    font-size:14px;
+}
+
+/* Buttons */
+
+.agent-add-btn,
+.agent-edit-btn,
+.agent-delete-btn{
+    border:none;
+    outline:none;
+    cursor:pointer;
+    padding:11px 20px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.agent-add-btn{
+    background:#fc8019;
+    color:#fff;
+}
+
+.agent-add-btn:hover{
+    background:#f97316;
+}
+
+.agent-edit-btn{
+    background:#fc8019;
+    color:#fff;
+}
+
+.agent-edit-btn:hover{
+    background:#f97316;
+}
+
+.agent-delete-btn{
+    background:#fff;
+    color:#e53935;
+    border:1px solid #e9e9eb;
+}
+
+.agent-delete-btn:hover{
+    background:#fff5f5;
+    border-color:#e53935;
+}
+
+/* Filter */
+
+.agent-filter-bar{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+    background:#fff;
+    border:1px solid #e9e9eb;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:24px;
+}
+
+.agent-search{
+    flex:1;
+    min-width:250px;
+    height:46px;
+    border:1px solid #d4d5d9;
+    border-radius:8px;
+    padding:0 16px;
+    font-size:14px;
+    outline:none;
+    transition:.2s;
+    background:#fff;
+}
+
+.agent-search:focus{
+    border-color:#fc8019;
+}
+
+.agent-select{
+    height:46px;
+    min-width:180px;
+    border:1px solid #d4d5d9;
+    border-radius:8px;
+    padding:0 14px;
+    background:#fff;
+    font-size:14px;
+    cursor:pointer;
+    outline:none;
+    transition:.2s;
+}
+
+.agent-select:focus{
+    border-color:#fc8019;
+}
+
+/* List */
+
+.agent-list{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+/* Card */
+
+.agent-card{
+    display:flex;
+    justify-content:space-between;
+    gap:28px;
+    background:#fff;
+    border:1px solid #e9e9eb;
+    border-radius:12px;
+    padding:20px;
+    transition:.2s;
+}
+
+.agent-card:hover{
+    border-color:#fc8019;
+    box-shadow:0 4px 14px rgba(0,0,0,.06);
+}
+
+/* Left */
+
+.agent-left{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.agent-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.agent-name{
+    margin:0;
+    font-size:22px;
+    font-weight:600;
+    color:#282c3f;
+}
+
+.agent-phone{
+    margin-top:4px;
+    color:#686b78;
+    font-size:14px;
+}
+
+/* Status */
+
+.agent-status{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px 14px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:600;
+    text-transform:capitalize;
+}
+
+.agent-status.available{
+    background:#edf7ed;
+    color:#2e7d32;
+}
+
+.agent-status.busy{
+    background:#fff8e1;
+    color:#ef6c00;
+}
+
+.agent-status.offline{
+    background:#f3f3f3;
+    color:#757575;
+}
+
+/* Zones */
+
+.agent-zone-section{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.agent-section-title{
+    font-size:13px;
+    font-weight:600;
+    color:#686b78;
+}
+
+.agent-zone-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.agent-zone-chip{
+    background:#f4f4f5;
+    color:#3d4152;
+    border-radius:6px;
+    padding:6px 12px;
+    font-size:13px;
+    font-weight:500;
+}
+
+/* Batch */
+
+.agent-batch{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.agent-zone{
+    background:#fafafa;
+    border:1px solid #ececec;
+    border-radius:10px;
+    padding:14px 18px;
+    min-width:180px;
+}
+
+.agent-zone-label{
+    font-size:12px;
+    color:#8b8d97;
+    margin-bottom:4px;
+}
+
+.agent-zone-name{
+    font-size:15px;
+    font-weight:600;
+    color:#282c3f;
+}
+
+.agent-arrow{
+    font-size:22px;
+    color:#fc8019;
+}
+
+.agent-no-batch{
+    color:#8b8d97;
+    font-style:italic;
+    font-size:14px;
+}
+
+/* Right */
+
+.agent-right{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-end;
+    gap:12px;
+}
+
+/* Empty */
+
+.agent-empty,
+.agent-loading{
+    background:#fff;
+    border:1px solid #e9e9eb;
+    border-radius:12px;
+    padding:60px;
+    text-align:center;
+    color:#686b78;
+    font-size:17px;
+}
+
+/* Responsive */
+
+@media(max-width:992px){
+
+    .agent-filter-bar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .agent-search,
+    .agent-select{
+        width:100%;
+    }
+
+    .agent-card{
+        flex-direction:column;
+    }
+
+    .agent-right{
+        width:100%;
+        flex-direction:row;
+        justify-content:flex-end;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .agent-page{
+        padding:18px;
+    }
+
+    .agent-page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .agent-add-btn{
+        width:100%;
+    }
+
+    .agent-top{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .agent-batch{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .agent-arrow{
+        transform:rotate(90deg);
+    }
+
+    .agent-zone{
+        width:100%;
+        box-sizing:border-box;
+    }
+
+    .agent-right{
+        width:100%;
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .agent-edit-btn,
+    .agent-delete-btn{
+        width:100%;
+    }
+
+}
+
+/* Modal Overlay */
+
+.agent-modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    animation:agentFade .2s ease;
+}
+
+/* Modal */
+
+.agent-modal{
+    width:520px;
+    max-width:95%;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 12px 35px rgba(0,0,0,.15);
+    animation:agentPopup .2s ease;
+}
+
+/* Modal Header */
+
+.agent-modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 24px;
+    border-bottom:1px solid #ececec;
+}
+
+.agent-modal-title{
+    margin:0;
+    font-size:22px;
+    font-weight:600;
+    color:#282c3f;
+}
+
+.agent-modal-close{
+    width:34px;
+    height:34px;
+    border:none;
+    background:#f5f5f5;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
+    color:#686b78;
+    transition:.2s;
+}
+
+.agent-modal-close:hover{
+    background:#ececec;
+}
+
+/* Modal Body */
+
+.agent-modal-body{
+    padding:24px;
+}
+
+.agent-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.agent-form-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.agent-form-label{
+    font-size:14px;
+    font-weight:500;
+    color:#3d4152;
+}
+
+/* Inputs */
+
+.agent-input,
+.agent-textarea,
+.agent-status-select{
+    width:100%;
+    box-sizing:border-box;
+    border:1px solid #d4d5d9;
+    background:#fff;
+    border-radius:8px;
+    padding:12px 14px;
+    font-size:14px;
+    outline:none;
+    transition:.2s;
+}
+
+.agent-input:focus,
+.agent-textarea:focus,
+.agent-status-select:focus{
+    border-color:#fc8019;
+}
+
+.agent-status-select{
+    height:46px;
+}
+
+.agent-textarea{
+    resize:vertical;
+    min-height:90px;
+}
+
+/* Zone Grid */
+
+.agent-zone-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.agent-zone-option{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    border:1px solid #e9e9eb;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+    background:#fff;
+}
+
+.agent-zone-option:hover{
+    border-color:#fc8019;
+    background:#fffaf5;
+}
+
+.agent-zone-option input{
+    width:18px;
+    height:18px;
+    accent-color:#fc8019;
+}
+
+/* Modal Footer */
+
+.agent-modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    padding:20px 24px;
+    border-top:1px solid #ececec;
+    background:#fafafa;
+}
+
+.agent-cancel-btn{
+    border:1px solid #d4d5d9;
+    background:#fff;
+    color:#3d4152;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.agent-cancel-btn:hover{
+    background:#f7f7f7;
+}
+
+.agent-save-btn{
+    border:none;
+    background:#fc8019;
+    color:#fff;
+    padding:10px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.agent-save-btn:hover{
+    background:#f97316;
+}
+
+/* Delete Modal */
+
+.agent-delete-message{
+    text-align:center;
+    color:#686b78;
+    line-height:1.7;
+    font-size:15px;
+}
+
+.agent-delete-message strong{
+    color:#282c3f;
+}
+
+.agent-delete-btn-danger{
+    border:none;
+    background:#e53935;
+    color:#fff;
+    padding:10px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.agent-delete-btn-danger:hover{
+    background:#d32f2f;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .agent-modal{
+        width:95%;
+    }
+
+    .agent-modal-header{
+        padding:16px 18px;
+    }
+
+    .agent-modal-body{
+        padding:18px;
+    }
+
+    .agent-modal-footer{
+        flex-direction:column;
+        padding:18px;
+    }
+
+    .agent-modal-footer button{
+        width:100%;
+    }
+
+    .agent-zone-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f5f5f5;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#c7c7c7;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#a9a9a9;
+}
+
+/* Animations */
+
+@keyframes agentFade{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+@keyframes agentPopup{
+
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}

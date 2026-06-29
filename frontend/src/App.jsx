@@ -1,20 +1,37 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./student/pages/Login";
+import Register from "./student/pages/Register";
 
-import Dashboard from "./pages/Dashboard";
-import Restaurants from "./pages/Restaurants";
-import Cart from "./pages/Cart";
-import RestaurantDetails from "./pages/RestaurantDetails";
-import FoodDetails from "./pages/FoodDetails";
-import Profile from "./pages/Profile";
-import OrderHistory from "./pages/OrderHistory";
+import Dashboard from "./student/pages/Dashboard";
+import Restaurants from "./student/pages/Restaurants";
+import Cart from "./student/pages/Cart";
+import RestaurantDetails from "./student/pages/RestaurantDetails";
+import FoodDetails from "./student/pages/FoodDetails";
+import Profile from "./student/pages/Profile";
+import OrderHistory from "./student/pages/OrderHistory";
 
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./student/components/MainLayout";
 
 import { Toaster } from "react-hot-toast";
-import SlotDashboard from "./pages/SlotDashboard";
+import SlotDashboard from "./student/pages/SlotDashboard";
+
+
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// admin imports
+import AdminLayout from "./admin/Layout/AdminLayout";
+import BatchManagement from "./admin/pages/BatchManagement";
+import AgentManagement from "./admin/pages/AgentManagement";
+import RestaurantManagement from "./admin/pages/RestaurantManagement";
+import UserManagement from "./admin/pages/UserManagement";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+import Analytics from "./admin/pages/Analytics";
+
+
+// Agent imports
+import AgentLogin from "./agent/pages/AgentLogin";
+
 
 
 function App() {
@@ -45,6 +62,45 @@ function App() {
 
                     <Route path="/slots" element={<SlotDashboard />} />
                 </Route>
+
+
+                {/* Admin Routes */}
+                <Route
+                    path="/admin"
+                    element={
+                        <ProtectedRoute allowedRoles={["admin"]} >
+                            <AdminLayout />
+                        </ProtectedRoute>
+                    }
+                >
+
+                    <Route path="dashboard" element={<AdminDashboard />} />
+
+                    <Route path="batches" element={<BatchManagement />} />
+
+                    <Route path="agents" element={<AgentManagement />} />
+
+                    <Route path="restaurants" element={<RestaurantManagement />} />
+
+                    <Route path="users" element={<UserManagement />} />
+
+                    <Route path="analytics" element={<Analytics />} />
+
+                </Route>
+
+                <Route path="/agent-login" element={<AgentLogin />} />
+
+                {/* Agent routes */}
+                <Route path="/agent"
+                    element={
+                        <ProtectedRoute allowedRoles={["agent"]} >
+                            
+                        </ProtectedRoute>
+                    }
+                >
+
+                </Route>
+
             </Routes>
         </BrowserRouter>
     );

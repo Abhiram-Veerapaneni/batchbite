@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import FoodCard from "../components/FoodCard";
 
-import { formatTime } from "../utils/timeUtils";
+import { formatTime } from "../../utils/timeUtils";
 import toast from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL;

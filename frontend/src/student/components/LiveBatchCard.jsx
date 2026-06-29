@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import { formatTime } from "../utils/timeUtils";
+import { formatTime } from "../../utils/timeUtils";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,7 +20,7 @@ function LiveBatchCard() {
                     withCredentials: true
                 }
             );
-            console.log(res.data);
+            // console.log(res.data);
 
             setBatchData(res.data);
 

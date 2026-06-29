@@ -6,18 +6,24 @@ import { CartProvider } from './context/CartContext.jsx';
 
 import { Toaster } from "react-hot-toast";
 
-import "./styles/global.css";
-import "./styles/pages.css"
-import "./styles/navbar.css";
-import "./styles/dashboard.css";
-import "./styles/foodCard.css";
-import "./styles/foodDetails.css";
-import "./styles/restaurantDetails.css";
-import "./styles/cart.css";
-import "./styles/profile.css";
-import "./styles/orderHistory.css";
-import "./styles/slotDashboard.css"
-import "./styles/liveBatchCard.css";
+import "./student/styles/global.css";
+import "./student/styles/pages.css"
+import "./student/styles/navbar.css";
+import "./student/styles/dashboard.css";
+import "./student/styles/foodCard.css";
+import "./student/styles/foodDetails.css";
+import "./student/styles/restaurantDetails.css";
+import "./student/styles/cart.css";
+import "./student/styles/profile.css";
+import "./student/styles/orderHistory.css";
+import "./student/styles/slotDashboard.css"
+import "./student/styles/liveBatchCard.css";
+
+import "./admin/styles/Global.css"
+import "./admin/styles/BatchManagement.css"
+import "./admin/styles/AdminLayout.css"
+import "./admin/styles/RestaurantManagement.css"
+import "./admin/styles/AgentManagement.css"
 
 createRoot(document.getElementById('root')).render(
 

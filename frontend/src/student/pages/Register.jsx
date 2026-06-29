@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { registerUser } from "../services/authService";
+import { registerUser } from "../../services/authService";
 
 import toast from "react-hot-toast";
 import axios from "axios";

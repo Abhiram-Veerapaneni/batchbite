@@ -80,7 +80,7 @@ export const getSlotDashBoard = async (req, res) => {
                         slot.startTime <= now &&
                         now < slot.endTime,
 
-                    regions: []
+                    zones: []
                 }
             );
 
@@ -91,7 +91,7 @@ export const getSlotDashBoard = async (req, res) => {
         }
 
         /*
-         * Populate regions
+         * Populate zones
          */
         for (const group of groupedOrders) {
 
@@ -101,7 +101,7 @@ export const getSlotDashBoard = async (req, res) => {
 
             if (!slotData) continue;
 
-            slotData.regions.push({
+            slotData.zones.push({
                 restaurantPincode:
                     group._id.restaurantPincode,
 

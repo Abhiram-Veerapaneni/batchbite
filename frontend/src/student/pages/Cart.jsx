@@ -3,10 +3,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import { CartContext } from "../context/CartContext";
+import { CartContext } from "../../context/CartContext";
 import FoodCard from "../components/FoodCard";
 
-import { formatTime } from "../utils/timeUtils";
+import { formatTime } from "../../utils/timeUtils";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const DELIVERY_CHARGE = 50;

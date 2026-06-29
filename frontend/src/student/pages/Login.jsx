@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../services/authService.js";
+import { loginUser } from "../../services/authService.js";
 import { useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 import toast from "react-hot-toast";
 
@@ -13,7 +13,12 @@ function Login() {
 
     useEffect(() => {
         if (!loading && user) {
-            navigate("/dashboard");
+
+            if (user.role === "admin") {
+                navigate("/admin/dashboard");
+                return;
+            }
+            else navigate("/dashboard");
         }
     }, [user, loading]);
 
@@ -31,15 +36,23 @@ function Login() {
 
             setError("");
 
-            const data = await loginUser({
+            const user = await loginUser({
                 email,
                 password
             })
 
-            console.log("Login Success: ", data);
+            console.log("Login Success: ", user);
 
             toast.success("Logged in successfully!");
-            navigate("/dashboard");
+
+            if (user.role === "admin") {
+                navigate("/admin/dashboard")
+                return;
+            }
+            else {
+                navigate("/dashboard");
+            }
+
 
             // force refresh user data after login
             window.location.reload();
@@ -99,6 +112,8 @@ function Login() {
                     </Link>
                 </p>
             </div>
+            
+            <button className="agent-login-btn" onClick={() => navigate("/agent-login")}> Agent Login </button>
         </div>
     );
 }

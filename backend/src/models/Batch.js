@@ -21,11 +21,13 @@ const batchSchema = new mongoose.Schema(
         },
 
         deliveryZone: {
-            type: String
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Zone"
         },
 
         restaurantZone: {
-            type: String
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Zone"
         },
 
         orders: [
@@ -57,7 +59,7 @@ const batchSchema = new mongoose.Schema(
             type: String,
             enum: [
                 "pending",
-                "assinged",
+                "assigned",
                 "out_for_delivery",
                 "delivered"
             ],

@@ -1,0 +1,297 @@
+/* ===========================
+   Batch Management Page
+=========================== */
+
+.batch-page{
+    min-height:100vh;
+    padding:30px;
+    background:#f8f9fb;
+    font-family:"Poppins",sans-serif;
+    box-sizing:border-box;
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.batch-page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.batch-page-title{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+    color:#333;
+}
+
+.batch-page-count{
+    padding:8px 16px;
+    border-radius:8px;
+    background:#fff;
+    border:1px solid #e6e6e6;
+    color:#666;
+    font-weight:600;
+}
+
+/* ===========================
+   Filter Bar
+=========================== */
+
+.batch-filter-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:28px;
+}
+
+.batch-search,
+.batch-select{
+    height:46px;
+    padding:0 14px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:#fff;
+    outline:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.batch-search{
+    flex:1;
+    min-width:260px;
+}
+
+.batch-search:focus,
+.batch-select:focus{
+    border-color:#ff7a00;
+}
+
+.batch-select{
+    min-width:160px;
+    cursor:pointer;
+}
+
+/* ===========================
+   Batch List
+=========================== */
+
+.batch-list{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+/* ===========================
+   Batch Card
+=========================== */
+
+.batch-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 24px;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    transition:.2s;
+}
+
+.batch-item:hover{
+    border-color:#ffb067;
+}
+
+/* ===========================
+   Left
+=========================== */
+
+.batch-left{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    flex:1;
+}
+
+.batch-zones{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.batch-zone-card{
+    padding:10px 14px;
+    border-radius:8px;
+    background:#fafafa;
+    border:1px solid #ececec;
+}
+
+.batch-zone-label{
+    font-size:12px;
+    color:#888;
+    margin-bottom:4px;
+}
+
+.batch-zone-name{
+    font-size:18px;
+    font-weight:600;
+    color:#333;
+}
+
+.batch-arrow{
+    color:#ff7a00;
+    font-size:22px;
+    font-weight:600;
+}
+
+.batch-details{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+}
+
+.batch-detail{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.batch-detail-title{
+    font-size:12px;
+    color:#888;
+}
+
+.batch-detail-value{
+    font-size:15px;
+    color:#333;
+    font-weight:600;
+}
+
+/* ===========================
+   Right
+=========================== */
+
+.batch-right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+/* ===========================
+   Status
+=========================== */
+
+.batch-status{
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+    text-transform:capitalize;
+}
+
+.batch-status.pending{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.batch-status.assigned{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.batch-status.out_for_delivery{
+    background:#ede9fe;
+    color:#6d28d9;
+}
+
+.batch-status.delivered{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+/* ===========================
+   Button
+=========================== */
+
+.batch-assign-btn{
+    padding:10px 18px;
+    border:none;
+    border-radius:8px;
+    background:#ff7a00;
+    color:#fff;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.batch-assign-btn:hover{
+    background:#ea6c00;
+}
+
+/* ===========================
+   Empty
+=========================== */
+
+.batch-empty{
+    padding:50px;
+    text-align:center;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    color:#888;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:900px){
+
+    .batch-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .batch-right{
+        width:100%;
+        justify-content:space-between;
+    }
+
+    .batch-details{
+        gap:16px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .batch-page{
+        padding:16px;
+    }
+
+    .batch-page-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .batch-zones{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .batch-arrow{
+        display:none;
+    }
+
+    .batch-search,
+    .batch-select{
+        width:100%;
+    }
+
+}

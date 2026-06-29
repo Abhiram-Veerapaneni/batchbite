@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { formatTime } from "../utils/timeUtils";
+import { formatTime } from "../../utils/timeUtils";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -126,7 +126,7 @@ function SlotDashboard() {
 
                                     <div
                                         key={batch._id}
-                                        className="region-section"
+                                        className="zone-section"
                                     >
 
                                         <h4>

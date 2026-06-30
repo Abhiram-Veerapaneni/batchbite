@@ -1,7 +1,8 @@
 import Agent from "../models/Agent.js";
+import Batch from "../models/Batch.js";
+import Order from "../models/Order.js";
 
 // CRUD APIs
-
 
 // GET /api/agents
 export const getAllAgents = async (req, res) => {
@@ -131,7 +132,7 @@ export const deleteAgent = async (req, res) => {
 // GET /api/agents/current-batch
 export const getCurrentBatch = async (req, res) => {
 
-    const agentId = req.user._id;
+    const agentId = req.agent._id;
 
     const agent = await Agent.findById(agentId)
         .populate({
@@ -151,10 +152,10 @@ export const pickUpBatch = async (req, res) => {
 
     await batch.save();
 
-    await Order.updateMany(
-        { _id: { $in: batch.orders } },
-        { $set: { status: "out_for_delivery" } }
-    );
+    // await Order.updateMany(
+    //     { _id: { $in: batch.orders } },
+    //     { $set: { status: "out_for_delivery" } }
+    // );
 
     res.json({ message: "Picked up" });
 };
@@ -180,3 +181,23 @@ export const deliverBatch = async (req, res) => {
 
     res.json({ message: "Delivered" });
 };
+
+// GET /api/agent/delivery-history
+export const getDeliveryHistory = async (req, res) => {
+
+    try {
+        
+        const batches = await Batch.find({
+            agent: req.agent._id,
+            status: "delivered"
+        })
+        .populate(["restaurantZone" , "deliveryZone"])
+        .sort({ updatedAt : -1})
+
+        res.status(200).json(batches);
+
+    } catch (error) {
+        
+        console.log(error);
+    }
+}

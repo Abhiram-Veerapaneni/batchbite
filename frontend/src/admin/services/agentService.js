@@ -31,7 +31,7 @@ export const getAllAgents = async () => {
 export const createAgent = async (data) => {
 
     const res = await axios.post(
-        `${API_URL}/agents/register`,
+        `${API_URL}/agent/register`,
         data,
         {
             withCredentials: true

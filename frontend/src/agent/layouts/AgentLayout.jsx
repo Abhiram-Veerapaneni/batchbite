@@ -1,15 +1,18 @@
 import { Outlet } from "react-router-dom";
 
-function AgentLayout() {
-    return (
-        <div>
-            <header>
-                <h2>Agent Panel</h2>
-            </header>
+import AgentNavbar from "../components/AgentNavbar";
 
-            <main>
+function AgentLayout() {
+
+    return (
+        <div className="agent-layout">
+
+            <AgentNavbar />
+
+            <main className="agent-main">
                 <Outlet />
             </main>
+
         </div>
     );
 }

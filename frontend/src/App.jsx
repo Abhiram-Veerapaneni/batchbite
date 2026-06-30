@@ -31,6 +31,11 @@ import Analytics from "./admin/pages/Analytics";
 
 // Agent imports
 import AgentLogin from "./agent/pages/AgentLogin";
+import AgentProtectedRoute from "./components/AgentProtectedRoute";
+import AgentDashboard from "./agent/pages/AgentDashboard";
+import DeliveryHistory from "./agent/pages/DeliveryHistory";
+import AgentProfile from "./agent/pages/AgentProfile";
+import AgentLayout from "./agent/layouts/AgentLayout";
 
 
 
@@ -89,15 +94,17 @@ function App() {
                 </Route>
 
                 <Route path="/agent-login" element={<AgentLogin />} />
-
-                {/* Agent routes */}
-                <Route path="/agent"
-                    element={
-                        <ProtectedRoute allowedRoles={["agent"]} >
-                            
-                        </ProtectedRoute>
-                    }
+                
+                <Route
+                    path="/agent"
+                    element={ <AgentProtectedRoute>
+                        <AgentLayout />
+                    </AgentProtectedRoute> }    
                 >
+
+                    <Route path="dashboard" element={<AgentDashboard /> } />
+                    <Route path="delivery-history" element={<DeliveryHistory />} />
+                    <Route path="profile" element={<AgentProfile />} />
 
                 </Route>
 

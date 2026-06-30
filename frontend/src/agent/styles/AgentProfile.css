@@ -1,0 +1,202 @@
+/* ===========================
+   Page
+=========================== */
+
+.agent-profile-page{
+    min-height:100vh;
+    padding:30px;
+    background:#fff7f1;
+    font-family:"Poppins",sans-serif;
+    box-sizing:border-box;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+}
+
+/* ===========================
+   Card
+=========================== */
+
+.agent-profile-card{
+    width:100%;
+    max-width:700px;
+    background:#fff;
+    border-radius:18px;
+    padding:35px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.agent-profile-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:35px;
+}
+
+.agent-profile-avatar{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#ff7a00;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+    font-weight:700;
+}
+
+.agent-profile-title{
+    margin:0;
+    color:#333;
+    font-size:30px;
+}
+
+.agent-profile-subtitle{
+    margin-top:6px;
+    color:#777;
+}
+
+/* ===========================
+   Details
+=========================== */
+
+.agent-profile-details{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.agent-profile-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    padding:16px 20px;
+    border-radius:12px;
+    border:1px solid #ececec;
+    background:#fafafa;
+}
+
+.agent-profile-label{
+    font-weight:600;
+    color:#666;
+}
+
+.agent-profile-value{
+    color:#333;
+    font-weight:500;
+}
+
+/* ===========================
+   Status
+=========================== */
+
+.agent-profile-status{
+    color:#fff;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+    text-transform:capitalize;
+}
+
+.agent-profile-status-available{
+    background:#28a745;
+}
+
+.agent-profile-status-busy{
+    background:#ff9800;
+}
+
+.agent-profile-status-offline{
+    background:#757575;
+}
+
+/* ===========================
+   Zones
+=========================== */
+
+.agent-profile-zones{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:flex-end;
+}
+
+.agent-profile-zone{
+    background:#ffe8d2;
+    color:#e86d00;
+    padding:7px 14px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* ===========================
+   Actions
+=========================== */
+
+.agent-profile-actions{
+    margin-top:35px;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.agent-profile-logout-btn{
+    border:none;
+    background:#e53935;
+    color:#fff;
+    padding:12px 28px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.agent-profile-logout-btn:hover{
+    background:#c62828;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:768px){
+
+    .agent-profile-page{
+        padding:20px;
+    }
+
+    .agent-profile-card{
+        padding:25px;
+    }
+
+    .agent-profile-header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .agent-profile-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .agent-profile-zones{
+        justify-content:flex-start;
+    }
+
+    .agent-profile-actions{
+        justify-content:stretch;
+    }
+
+    .agent-profile-logout-btn{
+        width:100%;
+    }
+
+}

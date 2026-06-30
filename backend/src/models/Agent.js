@@ -68,7 +68,7 @@ agentSchema.pre("save", async function () {
 
     // prevent rehashing when updating
     if(!this.isModified("password")) {
-        return next();
+        return;
     }
 
     this.password = await bcrypt.hash(this.password, 10);

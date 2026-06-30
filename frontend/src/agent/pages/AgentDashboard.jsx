@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import { getCurrentBatch } from "../services/agentService";
-import { pickUpBatch, deliverBatch } from "../services/agentService";
+import {
+    getCurrentBatch,
+    pickUpBatch,
+    deliverBatch
+} from "../services/agentService";
 
-function Dashboard() {
+import toast from "react-hot-toast";
+
+function AgentDashboard() {
 
     const [batch, setBatch] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -17,50 +22,107 @@ function Dashboard() {
             setBatch(data);
         } catch (err) {
             console.error(err);
+            toast.error("Failed to load batch");
         } finally {
             setLoading(false);
         }
     };
 
     const handlePickUp = async () => {
-        await pickUpBatch(batch._id);
-        fetchBatch();
+        try {
+            await pickUpBatch(batch._id);
+            toast.success("Batch picked up");
+            fetchBatch();
+        } catch (err) {
+            toast.error("Failed to pick up batch");
+        }
     };
 
     const handleDeliver = async () => {
-        await deliverBatch(batch._id);
-        fetchBatch();
+        try {
+            await deliverBatch(batch._id);
+            toast.success("Batch delivered");
+            fetchBatch();
+        } catch (err) {
+            toast.error("Failed to deliver batch");
+        }
     };
 
-    if (loading) return <h2>Loading...</h2>;
+    if (loading) {
+        return (
+            <div className="ad-loading">
+                Loading...
+            </div>
+        );
+    }
 
-    if (!batch) return <h2>No Active Batch</h2>;
+    if (!batch) {
+        return (
+            <div className="ad-empty">
+                <h2>No Active Batch</h2>
+                <p>You don't have any assigned batch right now.</p>
+            </div>
+        );
+    }
 
     return (
-        <div>
-            <h2>Current Batch</h2>
+        <div className="ad-page">
 
-            <p>
-                {batch.restaurantZone?.name} → {batch.deliveryZone?.name}
-            </p>
+            <div className="ad-card">
 
-            <p>Status: {batch.status}</p>
+                <div className="ad-header">
+                    <h2>Current Batch</h2>
 
-            <p>Orders: {batch.orderCount}</p>
+                    <span className={`ad-status ad-status-${batch.status}`}>
+                        {batch.status.replaceAll("_", " ")}
+                    </span>
+                </div>
 
-            {batch.status === "assigned" && (
-                <button onClick={handlePickUp}>
-                    Pick Up Batch
-                </button>
-            )}
+                <div className="ad-details">
 
-            {batch.status === "out_for_delivery" && (
-                <button onClick={handleDeliver}>
-                    Mark Delivered
-                </button>
-            )}
+                    <div className="ad-row">
+                        <span className="ad-label">Restaurant Zone</span>
+                        <span>{batch.restaurantZone?.name}</span>
+                    </div>
+
+                    <div className="ad-row">
+                        <span className="ad-label">Delivery Zone</span>
+                        <span>{batch.deliveryZone?.name}</span>
+                    </div>
+
+                    <div className="ad-row">
+                        <span className="ad-label">Orders</span>
+                        <span>{batch.orderCount}</span>
+                    </div>
+
+                </div>
+
+                <div className="ad-actions">
+
+                    {batch.status === "assigned" && (
+                        <button
+                            className="ad-btn ad-btn-pickup"
+                            onClick={handlePickUp}
+                        >
+                            Pick Up Batch
+                        </button>
+                    )}
+
+                    {batch.status === "out_for_delivery" && (
+                        <button
+                            className="ad-btn ad-btn-delivered"
+                            onClick={handleDeliver}
+                        >
+                            Mark Delivered
+                        </button>
+                    )}
+
+                </div>
+
+            </div>
+
         </div>
     );
 }
 
-export default Dashboard;
+export default AgentDashboard;

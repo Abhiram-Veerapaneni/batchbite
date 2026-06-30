@@ -1,0 +1,214 @@
+/* ===========================
+   Agent Dashboard
+=========================== */
+
+.ad-page{
+    padding:30px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:calc(100vh - 70px);
+    background:#fff7f1;
+    font-family:"Poppins",sans-serif;
+}
+
+/* ===========================
+   Card
+=========================== */
+
+.ad-card{
+    width:100%;
+    max-width:650px;
+    background:#ffffff;
+    border-radius:16px;
+    padding:30px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.ad-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.ad-header h2{
+    margin:0;
+    font-size:28px;
+    color:#333;
+    font-weight:600;
+}
+
+/* ===========================
+   Status Badge
+=========================== */
+
+.ad-status{
+    padding:8px 18px;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:600;
+    text-transform:capitalize;
+}
+
+.ad-status-assigned{
+    background:#fff3cd;
+    color:#b26a00;
+}
+
+.ad-status-out_for_delivery{
+    background:#ffe0b3;
+    color:#e67e22;
+}
+
+.ad-status-delivered{
+    background:#d4edda;
+    color:#2e7d32;
+}
+
+/* ===========================
+   Details
+=========================== */
+
+.ad-details{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.ad-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 18px;
+    border-radius:10px;
+    background:#fafafa;
+    border:1px solid #eeeeee;
+}
+
+.ad-label{
+    color:#777;
+    font-weight:500;
+}
+
+.ad-row span:last-child{
+    font-weight:600;
+    color:#333;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+.ad-actions{
+    margin-top:35px;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.ad-btn{
+    border:none;
+    color:#fff;
+    padding:12px 28px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+/* Pickup Button (Orange) */
+.ad-btn-pickup{
+    background:#ff7a00;
+}
+
+.ad-btn-pickup:hover{
+    background:#e86d00;
+}
+
+/* Deliver Button (Green) */
+.ad-btn-delivered{
+    background:#28a745;
+}
+
+.ad-btn-delivered:hover{
+    background:#218838;
+}
+
+/* ===========================
+   Empty State
+=========================== */
+
+.ad-empty{
+    margin:80px auto;
+    max-width:500px;
+    background:white;
+    padding:50px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+.ad-empty h2{
+    margin:0 0 12px;
+    color:#333;
+}
+
+.ad-empty p{
+    color:#777;
+    margin:0;
+}
+
+/* ===========================
+   Loading
+=========================== */
+
+.ad-loading{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:60vh;
+    font-size:20px;
+    font-weight:600;
+    color:#555;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:640px){
+
+    .ad-page{
+        padding:20px;
+    }
+
+    .ad-card{
+        padding:22px;
+    }
+
+    .ad-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .ad-row{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+    }
+
+    .ad-actions{
+        justify-content:stretch;
+    }
+
+    .ad-btn{
+        width:100%;
+    }
+
+}

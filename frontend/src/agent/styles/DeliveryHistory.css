@@ -1,0 +1,178 @@
+/* ===========================
+   Delivery History
+=========================== */
+
+.dh-page{
+    min-height:100vh;
+    padding:30px;
+    background:#fff7f1;
+    font-family:"Poppins",sans-serif;
+    box-sizing:border-box;
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.dh-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.dh-header h1{
+    margin:0;
+    color:#333;
+    font-size:30px;
+    font-weight:600;
+}
+
+.dh-count{
+    background:#ff7a00;
+    color:#fff;
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.dh-list{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.dh-card{
+    background:#fff;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    transition:.25s;
+}
+
+.dh-card:hover{
+    transform:translateY(-2px);
+}
+
+.dh-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.dh-card-header h3{
+    margin:0;
+    font-size:20px;
+    color:#333;
+}
+
+.dh-status{
+    background:#28a745;
+    color:#fff;
+    padding:6px 14px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* ===========================
+   Details
+=========================== */
+
+.dh-details{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.dh-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 16px;
+    background:#fafafa;
+    border:1px solid #eee;
+    border-radius:10px;
+}
+
+.dh-label{
+    color:#777;
+    font-weight:500;
+}
+
+.dh-row span:last-child{
+    color:#333;
+    font-weight:600;
+}
+
+/* ===========================
+   Empty State
+=========================== */
+
+.dh-empty{
+    background:#fff;
+    border-radius:16px;
+    padding:60px 30px;
+    text-align:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+.dh-empty h2{
+    margin:0 0 10px;
+    color:#333;
+}
+
+.dh-empty p{
+    margin:0;
+    color:#777;
+}
+
+/* ===========================
+   Loading
+=========================== */
+
+.dh-loading{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:60vh;
+    font-size:20px;
+    font-weight:600;
+    color:#555;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:768px){
+
+    .dh-page{
+        padding:20px;
+    }
+
+    .dh-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .dh-card-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .dh-row{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+    }
+
+}

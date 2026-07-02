@@ -24,7 +24,7 @@ export const addToCart = async (req, res) => {
     try {
 
         const { item } = req.body;
-
+        
         let cart = await Cart.findOne({ user: req.account._id }).populate("restaurantZone");
 
         if (!cart.restaurantZone) {

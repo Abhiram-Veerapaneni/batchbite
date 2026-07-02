@@ -7,11 +7,15 @@ import { CartContext } from "../../context/CartContext";
 import FoodCard from "../components/FoodCard";
 
 import { formatTime } from "../../utils/timeUtils";
+import PaymentModal from "../components/PaymentModal";
+import { AuthContext } from "../../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const DELIVERY_CHARGE = 50;
 
 const Cart = () => {
+
+    const { account } = useContext(AuthContext);
     const {
         cart,
         clearCart,
@@ -27,6 +31,9 @@ const Cart = () => {
     const [zones, setZones] = useState([]);
 
     const [batchInfo, setBatchInfo] = useState(null);
+
+    const [showPayment, setShowPayment] = useState(false);
+    const [orderData, setOrderData] = useState([]);
 
     const fetchSlots = async () => {
         try {
@@ -111,25 +118,22 @@ const Cart = () => {
             }
 
             if (!restaurantZone) {
-                toast.error(
-                    "Restaurant Zone is missing"
-                );
-
+                toast.error("Restaurant Zone is missing");
                 return;
             }
 
             if (!deliveryZone) {
-                toast.error(
-                    "Delivery Zone is missing"
-                );
+                toast.error("Delivery Zone is missing");
                 return;
             }
 
-            const orderData = {
+            setShowPayment(true);
+
+            const data = {
                 restaurantZone,
 
                 items: cart.map((item) => ({
-                    restaurantId : (item.restaurantId),
+                    restaurantId: (item.restaurantId),
                     itemId: item.itemId,
                     name: item.name,
                     image: item.image,
@@ -146,15 +150,9 @@ const Cart = () => {
                 paymentMethod
             };
 
-            await axios.post(
-                `${API_URL}/orders`,
-                orderData,
-                { withCredentials: true }
-            );
-
-            await clearCart();
-
-            toast.success("Order placed successfully!");
+            setOrderData(data)
+            
+            // toast.success("Order placed successfully!");
         } catch (error) {
             toast.error(
                 error.response?.data?.message ||
@@ -162,11 +160,6 @@ const Cart = () => {
             );
         }
     };
-
-    // to display total orders
-    const selectedSlotData = slots.find(
-        (slot) => slot._id === selectedSlot
-    );
 
     // Empty State
     if (cart.length === 0) {
@@ -447,6 +440,13 @@ const Cart = () => {
                     >
                         Place Order • ₹{totalAmount}
                     </button>
+
+                    <PaymentModal
+                        isOpen={showPayment}
+                        onClose={() => setShowPayment(false)}
+                        orderData={orderData}
+                        user={account}
+                    />
 
                 </div>
 

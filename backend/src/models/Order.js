@@ -81,6 +81,17 @@ const orderSchema = new mongoose.Schema(
             default: "pending"
         },
 
+        shiftCount: {
+            type: Number,
+            default: 0
+        },
+
+        batch: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Batch",
+            default: null
+        },
+
         deliveryStatus: {
             type: String,
             enum: [
@@ -109,16 +120,11 @@ const orderSchema = new mongoose.Schema(
             default: "pending"
         },
 
-        shiftCount: {
-            type: Number,
-            default: 0
+        payment : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Payment"
         },
 
-        batch: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Batch",
-            default: null
-        }
     },
     {
         timestamps: true

@@ -7,79 +7,71 @@ import {
     decrementBatchGroup,
     moveOrderBetweenBatchGroup,
 } from "../services/batchGroupService.js";
+import { ApiError } from "../utils/apiError.js";
 
-// Create order
-export const createOrder = async (req, res) => {
-    try {
+// Create order -> service after payment is done
+export const createOrder = async (orderData) => {
 
-        const {
-            restaurantZone,
-            items,
-            slot,
-            deliveryZone,
-            totalAmount,
-            paymentMethod
-        } = req.body;
+    const {
+        user,
+        restaurantZone,
+        items,
+        slot,
+        deliveryZone,
+        totalAmount,
+        paymentMethod,
+        payment
+    } = orderData;
 
-        // Validation
-        if (
-            !restaurantZone ||
-            !Array.isArray(items) ||
-            items.length === 0 ||
-            !slot ||
-            !deliveryZone ||
-            totalAmount == null ||
-            !paymentMethod
-        ) {
-            return res.status(400).json({
-                message: "Missing required fields"
-            });
-        }
-
-        // Payment status
-        const paymentStatus = (paymentMethod === "upi") ? "paid" : "pending";
-
-        // find slot 
-        const slotDoc = await Slot.findById(slot);
-
-        if (!slotDoc) {
-            return res.status(404).json({ message: "Slot not found" });
-        }
-
-        // Create order
-        const order = await Order.create({
-            user: req.account._id,
-            restaurantZone,
-            items: items.map((item) => ({
-                restaurantId: item.restaurantId,
-                itemId: item.itemId,
-                name: item.name,
-                image: item.image,
-                isVeg: item.isVeg,
-                price: item.price,
-                quantity: item.quantity,
-                restaurantName: item.restaurantName,
-            })),
-            slot,
-            deliveryZone,
-            totalAmount,
-            canModifyUntil: slotDoc.startTime.getTime() + 5 * 60 * 1000,
-            paymentMethod,
-            paymentStatus
-        });
-
-        await incrementBatchGroup(order, slotDoc);
-
-        res.status(201).json({
-            message: "Order created successfully",
-            order
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        });
+    // Validation
+    if (
+        !restaurantZone ||
+        !Array.isArray(items) ||
+        items.length === 0 ||
+        !slot ||
+        !deliveryZone ||
+        totalAmount == null ||
+        !paymentMethod
+    ) {
+        throw new ApiError(400, "Missing required fields");
     }
+
+    // Payment status
+    const paymentStatus = (paymentMethod === "upi") ? "paid" : "pending";
+
+    // find slot 
+    const slotDoc = await Slot.findById(slot);
+
+    if (!slotDoc) {
+        throw new ApiError(404, "Slot not found");
+    }
+    // Create order
+    const order = await Order.create({
+        user,
+        restaurantZone,
+        items: items.map((item) => ({
+            restaurantId: item.restaurantId,
+            itemId: item.itemId,
+            name: item.name,
+            image: item.image,
+            isVeg: item.isVeg,
+            price: item.price,
+            quantity: item.quantity,
+            restaurantName: item.restaurantName,
+        })),
+        slot,
+        deliveryZone,
+        totalAmount,
+        canModifyUntil: slotDoc.startTime.getTime() + 5 * 60 * 1000,
+        paymentMethod,
+        paymentStatus,
+        payment
+    });
+
+    await incrementBatchGroup(order, slotDoc);
+
+    return order;
+
 };
 
 // Get order history
@@ -92,6 +84,7 @@ export const getMyOrders = async (req, res) => {
             .populate("slot")
             .populate("deliveryZone")
             .populate("restaurantZone")
+            .populate("payment")
             .sort({ createdAt: -1 });
 
         res.json(orders);
@@ -177,7 +170,7 @@ export const cancelOrder = async (req, res) => {
 
     try {
 
-        const order = await Order.findById(req.params.id);
+        const order = await Order.findById(req.params.id).populate("payment");
 
         if (!order) {
             res.status(404).json({
@@ -187,8 +180,8 @@ export const cancelOrder = async (req, res) => {
 
         // remove this later
         if (
-            order.status === "out_for_delivery" ||
-            order.status === "delivered"
+            order.deliveryStatus === "out_for_delivery" ||
+            order.deliveryStatus === "delivered"
         ) {
             return res.status(400).json({
                 message: "Order cannot be cancelled"
@@ -202,8 +195,12 @@ export const cancelOrder = async (req, res) => {
             })
         }
 
-        order.status = "cancelled";
-
+        order.batchStatus = "cancelled";
+        order.deliveryStatus = "cancelled";
+        order.canModifyUntil = new Date();
+        const payment = order.payment;
+        payment.refundStatus = "requested";
+        await payment.save();
         await order.save();
 
         // decrease total orders in BatchGroup

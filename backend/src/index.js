@@ -3,6 +3,7 @@ import "dotenv/config"; // loads env variables into process.env
 import app from "./app.js";
 import connectDB from "./config/db.js";
 import cloudinary from "./config/cloudinary.js";
+import razorpay from "./config/razorpay.js";
 
 // import "../jobs/processSlots.js";
 

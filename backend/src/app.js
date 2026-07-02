@@ -20,6 +20,7 @@ import adminUserRoutes from "./routes/adminUserRoutes.js";
 import adminAgentRoutes from "./routes/adminAgentRoutes.js";
 import agentRoutes from "./routes/agentRoutes.js";
 
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 const app = express();
 
@@ -61,5 +62,7 @@ app.use("/api/agent", agentRoutes);
 app.use("/api/batches", batchRoutes);
 
 app.use("/api/admin/users", adminUserRoutes);
+
+app.use("/api/payments", paymentRoutes);
 
 export default app;

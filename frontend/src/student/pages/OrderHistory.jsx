@@ -145,7 +145,15 @@ function OrderHistory() {
                 }
             )
 
-            toast.success("Order cancelled successfully");
+            toast.success("Order cancelled successfully and refund is requested" );
+
+            await axios.post(
+                `${API_URL}/payments/refund`,
+                {orderId : orderId},
+                {
+                    withCredentials: true
+                }
+            )
 
             await fetchOrders(); // to get updated ones
         } catch (error) {

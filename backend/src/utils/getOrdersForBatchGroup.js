@@ -7,7 +7,7 @@ export const getOrdersForBatchGroup = async (slotId, batchGroup) => {
         // find orders belonging to this group
         const orders = await Order.find({
             slot: slotId,
-            status: { $in: ["pending", "shifted"] },
+            batchStatus: { $in: ["pending", "shifted"] },
             restaurantZone: batchGroup.restaurantZone._id,
             deliveryZone: batchGroup.deliveryZone._id,
         })

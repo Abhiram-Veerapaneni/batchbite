@@ -14,11 +14,7 @@ const AVAILABLE_REGIONS = [
     "Food Court"
 ];
 
-function AgentFormModal({
-    agent,
-    onClose,
-    onSaved
-}) {
+function AgentFormModal({ agent, onClose, onSaved }) {
 
     const isEdit = !!agent;
 

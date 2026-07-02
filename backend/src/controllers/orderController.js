@@ -48,9 +48,10 @@ export const createOrder = async (req, res) => {
 
         // Create order
         const order = await Order.create({
-            user: req.user._id,
+            user: req.account._id,
             restaurantZone,
             items: items.map((item) => ({
+                restaurantId: item.restaurantId,
                 itemId: item.itemId,
                 name: item.name,
                 image: item.image,
@@ -86,7 +87,7 @@ export const getMyOrders = async (req, res) => {
     try {
 
         const orders = await Order.find({
-            user: req.user._id
+            user: req.account._id
         })
             .populate("slot")
             .populate("deliveryZone")

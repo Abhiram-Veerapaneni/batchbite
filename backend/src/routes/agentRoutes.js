@@ -1,26 +1,27 @@
 import express from "express";
-import { protectAgent } from "../middlewares/agentMiddleware.js";
-import { getCurrentAgent, loginAgent, logoutAgent, registerAgent } from "../controllers/agentAuthController.js";
-import { adminMiddleware } from "../middlewares/adminMiddleware.js";
-import { deliverBatch, getCurrentBatch, getDeliveryHistory, pickUpBatch } from "../controllers/agentController.js";
+
+import { 
+    deliverBatch, 
+    getCurrentBatch, 
+    getDeliveryHistory, 
+    pickUpBatch 
+} from "../controllers/agentController.js";
+
+import { protect } from "../middlewares/authMiddleware.js";
+import { getCurrentAccount } from "../controllers/authController.js";
 
 const router = express.Router();
+router.use(protect);
 
-router.post("/register" , adminMiddleware, registerAgent);
+router.get("/me", getCurrentAccount);
 
-router.post("/login", loginAgent);
+router.get("/delivery-history", getDeliveryHistory);
 
-router.post("/logout", protectAgent, logoutAgent);
+router.get("/current-batch", getCurrentBatch);
 
-router.get("/me", protectAgent, getCurrentAgent);
+router.patch("/batches/:id/pick-up", pickUpBatch);
 
-router.get("/delivery-history", protectAgent, getDeliveryHistory);
-
-router.get("/current-batch", protectAgent, getCurrentBatch);
-
-router.patch("/batches/:id/pick-up", protectAgent, pickUpBatch);
-
-router.patch("/batches/:id/deliver", protectAgent, deliverBatch);
+router.patch("/batches/:id/deliver", deliverBatch);
 
 export default router
 

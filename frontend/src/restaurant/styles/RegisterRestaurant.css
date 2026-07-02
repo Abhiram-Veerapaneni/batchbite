@@ -1,0 +1,133 @@
+/* ===========================
+   Page
+=========================== */
+
+.rr-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fff7f1;
+    padding:30px;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+/* ===========================
+   Card
+=========================== */
+
+.rr-card{
+    width:100%;
+    max-width:460px;
+    background:#fff;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+/* ===========================
+   Title
+=========================== */
+
+.rr-title{
+    text-align:center;
+    margin-bottom:30px;
+    color:#333;
+    font-size:30px;
+}
+
+/* ===========================
+   Form
+=========================== */
+
+.rr-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.rr-input,
+.rr-select{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+    transition:.2s;
+    box-sizing:border-box;
+}
+
+.rr-input:focus,
+.rr-select:focus{
+    border-color:#ff7a00;
+}
+
+/* ===========================
+   Button
+=========================== */
+
+.rr-btn{
+    margin-top:10px;
+    border:none;
+    background:#ff7a00;
+    color:#fff;
+    padding:14px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.rr-btn:hover{
+    background:#e86d00;
+}
+
+/* ===========================
+   Error
+=========================== */
+
+.rr-error{
+    color:#d32f2f;
+    font-size:14px;
+    text-align:center;
+    margin:0;
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+.rr-footer{
+    margin-top:25px;
+    text-align:center;
+    color:#666;
+}
+
+.rr-link{
+    color:#ff7a00;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.rr-link:hover{
+    text-decoration:underline;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:480px){
+
+    .rr-card{
+        padding:25px;
+    }
+
+    .rr-title{
+        font-size:26px;
+    }
+
+}

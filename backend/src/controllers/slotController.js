@@ -6,7 +6,7 @@ export const getSlotDashBoard = async (req, res) => {
 
     try {
 
-        const userPincode = req.user.address.pincode;
+        const userPincode = req.account.address.pincode;
 
         const now = new Date();
 

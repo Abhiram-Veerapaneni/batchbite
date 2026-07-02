@@ -30,21 +30,27 @@ export const getAllAgents = async () => {
 
 export const createAgent = async (data) => {
 
-    const res = await axios.post(
-        `${API_URL}/agent/register`,
-        data,
-        {
-            withCredentials: true
-        }
-    )
+    try {
 
-    console.log("Agent created")
+        const res = await axios.post(
+            `${API_URL}/auth/agent/register`,
+            data,
+            {
+                withCredentials: true
+            }
+        )
+
+        console.log("Agent created")
+
+    } catch (error) {
+        console.log(error + " Frontend");
+    }
 }
 
-export const updateAgent = async(agentId, data) => {
-    
+export const updateAgent = async (agentId, data) => {
+
     try {
-        
+
         const res = await axios.patch(
             `${API_URL}/agents/${agentId}`,
             data,
@@ -59,10 +65,10 @@ export const updateAgent = async(agentId, data) => {
     }
 }
 
-export const deleteAgent = async(agentId) => {
+export const deleteAgent = async (agentId) => {
 
     try {
-        
+
         const res = await axios.delete(
             `${API_URL}/agents/${agentId}`,
             {
@@ -71,7 +77,7 @@ export const deleteAgent = async(agentId) => {
         )
         console.log("Agent deleted")
     } catch (error) {
-        
+
         console.log(error)
     }
 }

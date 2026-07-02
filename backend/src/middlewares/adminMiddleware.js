@@ -2,7 +2,7 @@ export const adminMiddleware = (req, res, next) => {
 
     try {
 
-        if (req.user.role !== "admin") {
+        if (req.accountType !== "admin") {
 
             return res.status(403).json({
                 message: "Access denied"

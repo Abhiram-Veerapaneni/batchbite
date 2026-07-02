@@ -2,18 +2,19 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import { AgentAuthContext } from "../../context/AgentAuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 function AgentProfile() {
 
-    const { agent, logout } = useContext(AgentAuthContext);
+    const { account, logout } = useContext(AuthContext);
+    const agent = account;
     const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
             await logout();
             toast.success("Agent logged out successfully");
-            navigate("/agent-login");
+            navigate("/");
         } catch (error) {
             toast.error("Failed to logout");
         }

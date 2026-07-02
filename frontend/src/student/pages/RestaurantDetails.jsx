@@ -185,6 +185,8 @@ function RestaurantDetails() {
 
                                             addToCart({
                                                 ...item, 
+                                                restaurantId: restaurant._id,
+                                                restaurantName: restaurant.name,
                                                 restaurantZone: restaurant.zone
                                             });
                                         }}

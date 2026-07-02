@@ -178,6 +178,16 @@
     color: #6a1b9a;
 }
 
+.status-chip.batched {
+    background: #e8f5e9;;
+    color: #2e7d32;
+}
+
+.status-chip.waiting {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
 .status-chip.out_for_delivery {
     background: #e3f2fd;
     color: #1565c0;

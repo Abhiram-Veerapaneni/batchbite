@@ -4,17 +4,17 @@ import { useContext } from "react";
 
 function ProtectedRoute({ allowedRoles, children }) {
 
-    const { user, loading } = useContext(AuthContext)
+    const { account, accountType, loading } = useContext(AuthContext)
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (!user) {
+    if (!account) {
         return <Navigate to="/" />;
     }
 
-    if (!allowedRoles.includes(user.role)) {
+    if (!allowedRoles.includes(accountType)) {
         return <Navigate to="/" />;
     }
 

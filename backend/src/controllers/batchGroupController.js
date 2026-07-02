@@ -6,7 +6,7 @@ export const getCurrentBatchGroups = async (req, res) => {
 
     try {
 
-        const userDeliveryZone = req.user.address.zone
+        const userDeliveryZone = req.account.address.zone
 
         const batchGroups = await BatchGroup
             .find({
@@ -56,7 +56,7 @@ export const getTotalOrdersInCurrentBatchGroup = async (req, res) => {
 export const getLiveBatchGroups = async (req, res) => {
     try {
 
-        const userZone = req.user.address.zone;
+        const userZone = req.account.address.zone;
 
         const now = new Date();
 

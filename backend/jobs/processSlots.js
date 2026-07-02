@@ -63,8 +63,10 @@ cron.schedule("* * * * *", async() => {
                         threshold: batchGroup.threshold
                     })
 
+                    console.log(`       Batch created with orderCount : ${batch.orderCount}`)
+                    
                     // update status and batch for orders
-                    await Order.updateMany(
+                    const result = await Order.updateMany(
                         {
                             _id: {
                                 $in : orders.map(order => order._id)
@@ -72,11 +74,12 @@ cron.schedule("* * * * *", async() => {
                         },
                         {
                             $set: {
-                                status: "out_for_delivery",
+                                batchStatus: "batched",
                                 batch: batch._id
                             }
                         }
                     )
+                    console.log(result);
 
                     // updated batchGroup
                     batchGroup.status = "batched";
@@ -106,7 +109,10 @@ cron.schedule("* * * * *", async() => {
                                 }
                             },
                             {
-                                $set: { status : "cancelled"}
+                                $set: { 
+                                    batchStatus : "cancelled",
+                                    deliveryStatus: "cancelled"
+                                }
                             }
                         )
                         // delete batchGroup
@@ -124,7 +130,7 @@ cron.schedule("* * * * *", async() => {
                         {
                             $set: {
                                 slot: nextSlot._id,
-                                status: "shifted",
+                                batchStatus: "shifted",
                                 canModifyUntil: new Date(nextSlot.startTime.getTime() + 5 * 60 * 1000)
                             },
                             $inc: { shiftCount: 1 }

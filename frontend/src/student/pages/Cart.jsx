@@ -129,6 +129,7 @@ const Cart = () => {
                 restaurantZone,
 
                 items: cart.map((item) => ({
+                    restaurantId : (item.restaurantId),
                     itemId: item.itemId,
                     name: item.name,
                     image: item.image,

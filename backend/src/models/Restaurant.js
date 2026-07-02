@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
 const menuItemSchema = new mongoose.Schema({
@@ -14,6 +15,10 @@ const menuItemSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
+    },
+
+    imagePublicId: {
+        type: String
     },
 
     price: {
@@ -44,9 +49,31 @@ const restaurantSchema = new mongoose.Schema(
             required: true
         },
 
-        image: {
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            lowercase: true,
+            trim: true,
+        },
+
+        phone: {
             type: String,
             required: true
+        },
+
+        password: {
+            type: String,
+            required: true,
+            select: false // Don't include password in queries by default
+        },
+
+        image: {
+            type: String,
+        },
+
+        imagePublicId: {
+            type: String
         },
 
         zone: {
@@ -60,6 +87,25 @@ const restaurantSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+
+
+restaurantSchema.pre("save", async function () {
+
+    // prevent rehashing when updating
+    if (!this.isModified("password")) {
+        return;
+    }
+
+    this.password = await bcrypt.hash(this.password, 10);
+})
+
+restaurantSchema.methods.matchPassword = async function (enteredPassword) {
+
+    return await bcrypt.compare(
+        enteredPassword,
+        this.password
+    )
+}
 
 const Restaurant = mongoose.model(
     "Restaurant",

@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const registerUser = async (userData) => {
 
     const response = await axios.post(
-        `${API_URL}/auth/register`,
+        `${API_URL}/auth/student/register`,
         userData,
         {
             withCredentials: true // for sending and receiving cookies
@@ -17,7 +17,27 @@ export const registerUser = async (userData) => {
     return response.data;
 };
 
-export const loginUser = async (userData) => {
+export const registerRestaurant = async (data) => {
+
+    try {
+        
+        const res = await axios.post(
+            `${API_URL}/auth/restaurant/register`,
+            data,
+            {
+                withCredentials: true
+            }
+        )
+
+        return res.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const loginAccount = async (userData) => {
+
+    console.log(userData);
 
     const response = await axios.post(
         `${API_URL}/auth/login`,
@@ -30,7 +50,7 @@ export const loginUser = async (userData) => {
     return response.data;
 };
 
-export const logoutUser = async () => {
+export const logoutAccount = async () => {
 
     const response = await axios.post(
         `${API_URL}/auth/logout`,
@@ -44,7 +64,7 @@ export const logoutUser = async () => {
 }
 
 // get currently logged-in user
-export const getCurrentUser = async () => {
+export const getCurrentAccount = async () => {
 
     const response = await axios.get(
         `${API_URL}/auth/me`,

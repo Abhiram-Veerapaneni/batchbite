@@ -5,8 +5,6 @@ import App from './App.jsx'
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from './context/CartContext.jsx';
 
-import { AgentAuthProvider } from './context/AgentAuthContext.jsx';
-
 
 import { Toaster } from "react-hot-toast";
 
@@ -39,9 +37,7 @@ import "./agent/styles/AgentDashboard.css"
 createRoot(document.getElementById("root")).render(
     <CartProvider>
         <AuthProvider>
-            <AgentAuthProvider>
                 <App />
-            </AgentAuthProvider>
         </AuthProvider>
     </CartProvider>
 );

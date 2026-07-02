@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function AdminSidebar() {
+
+    const { logout } = useContext(AuthContext);
 
     return (
 
@@ -35,7 +39,10 @@ function AdminSidebar() {
                 </NavLink>
 
             </nav>
-
+            <NavLink to="/" onClick={logout}>
+               Logout
+            </NavLink>
+            
         </aside>
 
     );

@@ -1,71 +1,91 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { getCurrentUser, logoutUser } from "../services/authService";
 
 import { CartContext } from "./CartContext";
-
-
+import { getCurrentAccount, logoutAccount } from "../services/authService";
 
 // Create context (global auth store)
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-  const [user, setUser] = useState(null);
+  const [account, setAccount] = useState(null);
+  const [accountType, setAccountType] = useState("");
+
   const [loading, setLoading] = useState(true);
 
   const { fetchCart } = useContext(CartContext);
-  
-  // Fetch logged-in user from backend (/me)
-  const fetchUser = async () => {
+
+  // Fetch logged-in account from backend (/me)
+  const fetchAccount = async () => {
     try {
-      const data = await getCurrentUser();
 
-      setUser(data); // store user globally
+      const data = await getCurrentAccount();
 
-      // to load cart right after user logs in (cart sync)
-      fetchCart();
+      // store account globally
+      setAccount(data.account);
+      setAccountType(data.accountType);
+
+      // to load cart right after account logs in (cart sync)
+      if (data.accountType === "student") fetchCart();
 
     } catch (error) {
 
-      setUser(null); // not logged in
+      setAccount(null); // not logged in
 
     } finally {
+
       setLoading(false);
+
     }
   };
 
 
-  const refreshUser = async () => {
+  const refreshAccount = async () => {
     try {
-      const data = await getCurrentUser();
-      setUser(data);
+
+      const data = await getCurrentAccount();
+
+      setAccount(data.account);
+      setAccountType(data.accountType);
+
     } catch (err) {
-      setUser(null);
+
+      setAccount(null);
+
     }
   };
 
   const logout = async () => {
     try {
-      await logoutUser();   // call backend logout route
+
+      await logoutAccount();   // call backend logout route
+
     } catch (err) {
+
       console.error(err);
+
     } finally {
-      setUser(null);
+      setAccount(null);
+      setAccountType("");
+
     }
   };
 
   // Run once when app loads
   useEffect(() => {
-    fetchUser();
+
+    fetchAccount();
+
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        setUser,
+        account,
+        accountType,
+        setAccount,
         loading,
-        refreshUser,
+        refreshAccount,
         logout
       }}
     >

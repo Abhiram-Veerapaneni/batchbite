@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
 
-const cartItemSchema = new mongoose.Schema (
+const cartItemSchema = new mongoose.Schema(
 
     {
-        itemId : {
+        restaurantId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
+        },
+        itemId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true
         },
@@ -14,8 +18,6 @@ const cartItemSchema = new mongoose.Schema (
         },
 
         image: String,
-
-        restaurantName: String,
 
         isVeg: Boolean,
 
@@ -41,9 +43,9 @@ const cartSchema = new mongoose.Schema(
             ref: "User",
             required: true,
             unique: true
-        }, 
+        },
 
-        restaurantZone : {
+        restaurantZone: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Zone"
         },

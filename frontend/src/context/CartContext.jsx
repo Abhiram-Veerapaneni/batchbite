@@ -59,6 +59,10 @@ export const CartProvider = ({ children }) => {
 
         } catch (error) {
 
+            console.error(
+                error.response?.data?.message ||
+                "Failed to add item"
+            );
             toast.error(
                 error.response?.data?.message ||
                 "Failed to add item"

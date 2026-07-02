@@ -132,7 +132,7 @@ export const deleteAgent = async (req, res) => {
 // GET /api/agents/current-batch
 export const getCurrentBatch = async (req, res) => {
 
-    const agentId = req.agent._id;
+    const agentId = req.account._id;
 
     const agent = await Agent.findById(agentId)
         .populate({
@@ -152,10 +152,10 @@ export const pickUpBatch = async (req, res) => {
 
     await batch.save();
 
-    // await Order.updateMany(
-    //     { _id: { $in: batch.orders } },
-    //     { $set: { status: "out_for_delivery" } }
-    // );
+    await Order.updateMany(
+        { _id: { $in: batch.orders } },
+        { $set: { deliveryStatus: "out_for_delivery" } }
+    );
 
     res.json({ message: "Picked up" });
 };
@@ -171,7 +171,7 @@ export const deliverBatch = async (req, res) => {
 
     await Order.updateMany(
         { _id: { $in: batch.orders } },
-        { $set: { status: "delivered" } }
+        { $set: { deliveryStatus: "delivered" } }
     );
 
     await Agent.findByIdAndUpdate(batch.agent, {
@@ -188,7 +188,7 @@ export const getDeliveryHistory = async (req, res) => {
     try {
         
         const batches = await Batch.find({
-            agent: req.agent._id,
+            agent: req.account._id,
             status: "delivered"
         })
         .populate(["restaurantZone" , "deliveryZone"])

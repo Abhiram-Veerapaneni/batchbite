@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema(
     {
+        restaurantId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
+        },
         itemId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true
@@ -66,16 +70,26 @@ const orderSchema = new mongoose.Schema(
             required: true
         },
 
-        status: {
+        batchStatus: {
             type: String,
             enum: [
                 "pending",
                 "shifted",
+                "batched",
+                "cancelled"
+            ],
+            default: "pending"
+        },
+
+        deliveryStatus: {
+            type: String,
+            enum: [
+                "waiting",
                 "out_for_delivery",
                 "delivered",
                 "cancelled"
             ],
-            default: "pending"
+            default: "waiting"
         },
 
         canModifyUntil: {
@@ -110,6 +124,11 @@ const orderSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+
+// create index for restaurantId
+orderSchema.index({
+    "items.restaurantId": 1
+});
 
 const Order = mongoose.model("Order", orderSchema);
 

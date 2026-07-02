@@ -251,15 +251,21 @@ function OrderHistory() {
                                     <div className="order-status-row">
 
                                         <span
-                                            className={`status-chip ${order.status}`}
+                                            className={`status-chip ${order.batchStatus}`}
                                         >
-                                            {order.status.replaceAll("_", " ")}
+                                            Batch : {order.batchStatus.replaceAll("_", " ")}
+                                        </span>
+
+                                        <span
+                                            className={`status-chip ${order.deliveryStatus}`}
+                                        >
+                                            Delivery : {order.deliveryStatus.replaceAll("_", " ")}
                                         </span>
 
                                         <span
                                             className={`payment-chip ${order.paymentStatus}`}
                                         >
-                                            Payment {order.paymentStatus}
+                                            Payment : {order.paymentStatus}
                                         </span>
 
                                     </div>
@@ -270,8 +276,8 @@ function OrderHistory() {
                                         </span>
                                     )}
 
-                                    {(order.status === "pending" ||
-                                        order.status === "shifted") && (
+                                    {(order.batchStatus === "pending" ||
+                                        order.batchStatus === "shifted") && (
 
                                             <span className="info-chip batch-chip">
                                                 👥 {" "}

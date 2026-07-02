@@ -5,8 +5,8 @@ export const getCart = async (req, res) => {
 
     try {
 
-        let cart = await Cart.findOne({ 
-            user: req.user._id 
+        let cart = await Cart.findOne({
+            user: req.account._id
         }).populate("restaurantZone")
 
         res.json(cart);
@@ -25,22 +25,20 @@ export const addToCart = async (req, res) => {
 
         const { item } = req.body;
 
-        let cart = await Cart.findOne({ user: req.user._id }).populate("restaurantZone");
+        let cart = await Cart.findOne({ user: req.account._id }).populate("restaurantZone");
 
-        if(!cart.restaurantZone) {
+        if (!cart.restaurantZone) {
             cart.restaurantZone = item.restaurantZone;
         }
 
         // different restaurant zone -> error
-        if (!cart.restaurantZone._id || cart.restaurantZone._id.toString() !== item.restaurantZone._id) {
+        if (!cart.restaurantZone?._id || cart.restaurantZone._id.toString() !== item.restaurantZone._id.toString()) {
 
             return res.status(400).json({
                 message: `You can only order from restaurants in zone ${cart.restaurantZone.name}. 
                             Please clear your cart to add a different`
-            })   
+            })
         }
-
-        
 
         // find existing item
         const existingItem = cart.items.find(
@@ -50,18 +48,16 @@ export const addToCart = async (req, res) => {
         if (existingItem) {
             existingItem.quantity++;
         } else {
-
             cart.items.push({
+                restaurantId: (item.restaurantId),
                 itemId: item._id,
                 name: item.name,
                 image: item.image,
-                restaurantName: item.restaurantName,
                 isVeg: item.isVeg,
                 price: item.price,
                 quantity: 1
             });
         }
-
         await cart.save();
         res.json(cart);
 
@@ -77,7 +73,7 @@ export const increaseQuantity = async (req, res) => {
 
     try {
 
-        const cart = await Cart.findOne({ user: req.user._id });
+        const cart = await Cart.findOne({ user: req.account._id });
 
         const item = cart.items.find(
             (i) => i.itemId.toString() === req.params.itemId
@@ -105,7 +101,7 @@ export const increaseQuantity = async (req, res) => {
 export const decreaseQuantity = async (req, res) => {
 
     try {
-        const cart = await Cart.findOne({ user: req.user._id });
+        const cart = await Cart.findOne({ user: req.account._id });
 
         const item = cart.items.find(
             (i) => i.itemId.toString() === req.params.itemId
@@ -146,7 +142,7 @@ export const clearCart = async (req, res) => {
 
     try {
         const cart = await Cart.findOne({
-            user: req.user._id
+            user: req.account._id
         });
 
 

@@ -1,0 +1,226 @@
+/* Card */
+
+.mic-card {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .04);
+    transition: .2s;
+}
+
+.mic-card:hover {
+    transform: translateY(-2px);
+    border-color: #ff8c42;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
+}
+
+/* Image */
+
+.mic-image-wrapper {
+    flex-shrink: 0;
+}
+
+.mic-image {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+
+/* Content */
+
+.mic-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Header */
+
+.mic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.mic-name {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #222;
+}
+
+.mic-description {
+    margin: 6px 0 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.mic-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ff8c42;
+    white-space: nowrap;
+}
+
+/* Meta */
+
+.mic-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.mic-category {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #f4f4f4;
+    color: #555;
+    font-size: .85rem;
+    font-weight: 500;
+}
+
+.mic-badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: .82rem;
+    font-weight: 600;
+}
+
+.mic-veg {
+    background: #eaf8ed;
+    color: #2e7d32;
+}
+
+.mic-nonveg {
+    background: #fdecec;
+    color: #d32f2f;
+}
+
+.mic-available {
+    background: #e8f4ff;
+    color: #1565c0;
+}
+
+.mic-unavailable {
+    background: #fff4e5;
+    color: #c67c00;
+}
+
+/* Actions */
+
+.mic-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Switch */
+
+.mic-switch {
+    position: relative;
+    width: 48px;
+    height: 26px;
+    margin-right: auto;
+}
+
+.mic-switch input {
+    display: none;
+}
+
+.mic-slider {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    background: #d5d5d5;
+    border-radius: 999px;
+    transition: .25s;
+}
+
+.mic-slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: .25s;
+}
+
+.mic-switch input:checked + .mic-slider {
+    background: #ff8c42;
+}
+
+.mic-switch input:checked + .mic-slider::before {
+    transform: translateX(22px);
+}
+
+/* Buttons */
+
+.mic-edit-btn,
+.mic-delete-btn {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.mic-edit-btn {
+    background: #fff4eb;
+    color: #ff8c42;
+}
+
+.mic-edit-btn:hover {
+    background: #ffe7d3;
+}
+
+.mic-delete-btn {
+    background: #fdecec;
+    color: #d32f2f;
+}
+
+.mic-delete-btn:hover {
+    background: #f8d8d8;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .mic-card {
+        flex-direction: column;
+    }
+
+    .mic-image {
+        width: 100%;
+        height: 220px;
+    }
+
+    .mic-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .mic-actions {
+        flex-wrap: wrap;
+    }
+
+    .mic-switch {
+        margin-right: 0;
+    }
+
+}

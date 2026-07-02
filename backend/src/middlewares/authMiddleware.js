@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
+import Agent from "../models/Agent.js";
+import Restaurant from "../models/Restaurant.js";
 
 // check if user is logged in 
 
@@ -22,23 +24,35 @@ export const protect = async (req, res, next) => {
             process.env.JWT_SECRET
         );
 
-        const user = await User.findById(decoded.userId);
+        const accountType = decoded.accountType;
 
-        if (!user) {
-            return res.status(401).json({
-                message: "User not found"
-            });
-        }
+        let account = null;
+
+        if (accountType === "student" || accountType === "admin")
+            account = await User.findById(decoded.accountId);
+
+        if (accountType === "agent")
+            account = await Agent.findById(decoded.accountId);
+
+        if (accountType === "restaurant")
+            account = await Restaurant.findById(decoded.accountId);
+    
+        if (!account) {
+                return res.status(401).json({
+                    message: "Account not found"
+                });
+            }
 
         // Prevent disabled accounts
-        if (!user.isActive) {
+        if (accountType === "student" && !account.isActive) {
             return res.status(403).json({
                 message: "Account has been disabled"
             });
         }
 
         // making user available to middleware/controllers
-        req.user = user;
+        req.account = account;
+        req.accountType = accountType;
         
         next();
 
@@ -56,7 +70,7 @@ export const authorizeRoles = (...roles) => {
 
     return (req, res, next) => {
 
-        if(!roles.includes(req.user.role)) {
+        if (!roles.includes(req.account.role)) {
 
             return res.status(403).json({
                 message: "Access denied"

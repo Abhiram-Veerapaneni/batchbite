@@ -30,13 +30,19 @@ import Analytics from "./admin/pages/Analytics";
 
 
 // Agent imports
-import AgentLogin from "./agent/pages/AgentLogin";
-import AgentProtectedRoute from "./components/AgentProtectedRoute";
 import AgentDashboard from "./agent/pages/AgentDashboard";
 import DeliveryHistory from "./agent/pages/DeliveryHistory";
 import AgentProfile from "./agent/pages/AgentProfile";
 import AgentLayout from "./agent/layouts/AgentLayout";
 
+
+// Restaurant
+import RegisterRestaurant from "./restaurant/pages/RegisterRestaurant";
+import RestaurantLayout from "./restaurant/Layouts/RestaurantLayout";
+import RestaurantDashboard from "./restaurant/pages/RestaurantDashboard";
+import MenuPage from "./restaurant/pages/MenuPage";
+import Orders from "./restaurant/pages/Orders";
+import RestaurantProfile from "./restaurant/pages/RestaurantProfile";
 
 
 function App() {
@@ -48,6 +54,7 @@ function App() {
                 {/* Pages WITHOUT Navbar */}
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/register/restaurant" element={<RegisterRestaurant />} />
 
                 {/* Pages WITH Navbar */}
                 <Route element={<MainLayout />}>
@@ -93,21 +100,37 @@ function App() {
 
                 </Route>
 
-                <Route path="/agent-login" element={<AgentLogin />} />
-                
+                {/* Agent Routes */}
                 <Route
                     path="/agent"
-                    element={ <AgentProtectedRoute>
-                        <AgentLayout />
-                    </AgentProtectedRoute> }    
+                    element={
+                        <ProtectedRoute allowedRoles={["agent"]}>
+                            <AgentLayout />
+                        </ProtectedRoute>
+                    }
                 >
 
-                    <Route path="dashboard" element={<AgentDashboard /> } />
+                    <Route path="dashboard" element={<AgentDashboard />} />
                     <Route path="delivery-history" element={<DeliveryHistory />} />
                     <Route path="profile" element={<AgentProfile />} />
 
                 </Route>
 
+                {/* Restaurant ROutes */}
+                <Route
+                    path="/restaurant"
+                    element={
+                        <ProtectedRoute allowedRoles={["restaurant"]}>
+                            <RestaurantLayout />
+                        </ProtectedRoute>
+                    }
+                >
+                    <Route path="dashboard" element={<RestaurantDashboard />} />
+                    <Route path="menu" element={<MenuPage />} />
+                    <Route path="orders" element={<Orders />} />
+                    <Route path="profile" element={<RestaurantProfile />} />
+                    
+                </Route>
             </Routes>
         </BrowserRouter>
     );

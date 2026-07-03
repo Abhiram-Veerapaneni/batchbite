@@ -28,7 +28,7 @@ import "./admin/styles/AgentManagement.css"
 
 
 import "./agent/styles/AgentLayout.css"
-import "./agent/styles/AgentNavBar.css"
+import "./agent/styles/AgentNavbar.css"
 import "./agent/styles/DeliveryHistory.css"
 import "./agent/styles/AgentProfile.css"
 import "./agent/styles/AgentDashboard.css"

@@ -1,8 +1,11 @@
-import razorpay from "../config/razorpay.js";
 import crypto from "crypto";
 import { ApiError } from "../utils/apiError.js";
 
 import Payment from "../models/Payment.js";
+
+import getRazorpayInstance from "../config/razorpay.js";
+
+const razorpay = getRazorpayInstance();
 
 export const createRazorpayOrderService = async ({
     userId,

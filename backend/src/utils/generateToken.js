@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const generateToken =  (res, accountId, accountType) => {
+const generateToken = (res, accountId, accountType) => {
 
     const token = jwt.sign(
         {
@@ -13,11 +13,13 @@ const generateToken =  (res, accountId, accountType) => {
         }
     );
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.cookie("jwt", token, {
-        httpOnly: true, // js cannot access cookie
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict", // against CSRF attacks
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7days
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
 };

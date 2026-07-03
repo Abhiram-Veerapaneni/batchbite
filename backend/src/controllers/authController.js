@@ -251,10 +251,12 @@ const loginAccount = async (req, res) => {
 // Logout
 const logoutAccount = async (req, res) => {
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.clearCookie("jwt", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
     });
 
     res.status(200).json({

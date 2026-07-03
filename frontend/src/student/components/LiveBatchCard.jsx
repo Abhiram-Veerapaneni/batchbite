@@ -36,12 +36,12 @@ function LiveBatchCard() {
 
         fetchBatchGroups();
 
-        const interval = setInterval(
-            fetchBatchGroups,
-            5000
-        );
+        // const interval = setInterval(
+        //     fetchBatchGroups,
+        //     5000
+        // );
 
-        return () => clearInterval(interval);
+        // return () => clearInterval(interval);
 
     }, []);
 

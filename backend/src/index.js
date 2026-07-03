@@ -4,10 +4,6 @@ import app from "./app.js";
 import connectDB from "./config/db.js";
 import cloudinary from "./config/cloudinary.js";
 
-import getRazorpayInstance from "./config/razorpay.js";
-
-const razorpay = getRazorpayInstance();
-
 // import "../jobs/processSlots.js";
 
 const PORT = process.env.PORT || 6000;

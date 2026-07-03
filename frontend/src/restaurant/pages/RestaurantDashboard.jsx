@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import { getTodaysOrders } from "../services/RestaurantServices";
-import { getDeliveryZones } from "../services/OtherServices";
+import { getZones } from "../../services/OtherServices";
 
 import "../styles/RestaurantDashboard.css";
 import { formatTime } from "../../utils/timeUtils";
@@ -70,7 +70,7 @@ function RestaurantDashboard() {
 
     useEffect(() => {
         const fetchZones = async () => {
-            const zones = await getDeliveryZones();
+            const zones = await getZones();
 
             setDeliveryZoneOptions([
                 ["all", "All"],

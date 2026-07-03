@@ -32,10 +32,6 @@ function RegisterRestaurant() {
 
                 setZones(res.data);
 
-                if (res.data.length > 0) {
-                    setZone(res.data[0]._id);
-                }
-
             } catch (err) {
                 setError("Failed to load zones");
             }
@@ -133,6 +129,7 @@ function RegisterRestaurant() {
                         onChange={(e) => setZone(e.target.value)}
                         required
                     >
+                        <option> Select Zone</option>
                         {zones.map(zone => (
                             <option
                                 key={zone._id}

@@ -1,6 +1,6 @@
 /* Page */
 
-.rr-page{
+.login-page{
     min-height:100vh;
     display:flex;
     justify-content:center;
@@ -11,88 +11,113 @@
     box-sizing:border-box;
 }
 
-/* Card */
+/* Container */
 
-.rr-card{
+.login-container{
     width:100%;
-    max-width:500px;
+    max-width:440px;
     background:#fff;
     padding:36px;
     border-radius:18px;
-    border:1px solid #f1f1f1;
     box-shadow:0 12px 36px rgba(0,0,0,.08);
+    border:1px solid #f1f1f1;
 }
 
 /* Header */
 
-.rr-title{
-    margin:0 0 8px;
+.login-header{
     text-align:center;
-    font-size:2rem;
+    margin-bottom:28px;
+}
+
+.login-title{
+    margin:0;
+    font-size:2.2rem;
     font-weight:700;
     color:#ff8c42;
 }
 
-.rr-title::after{
-    content:"Join BatchBite as a Restaurant";
-    display:block;
+.login-subtitle{
     margin-top:8px;
-    font-size:.95rem;
-    font-weight:400;
     color:#777;
+    font-size:.95rem;
 }
 
 /* Form */
 
-.rr-form{
+.login-form{
     display:flex;
     flex-direction:column;
     gap:18px;
-    margin-top:28px;
+}
+
+/* Account Menu */
+
+.login-account-menu{
+    display:flex;
+    background:#f7f7f7;
+    border-radius:12px;
+    padding:4px;
+    gap:4px;
+}
+
+.login-account-item{
+    flex:1;
+    padding:11px 8px;
+    border:none;
+    border-radius:10px;
+    background:transparent;
+    color:#666;
+    font-size:.9rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.login-account-item:hover{
+    background:#ffe8d8;
+    color:#ff8c42;
+}
+
+.login-account-item.active{
+    background:#ff8c42;
+    color:#fff;
+    box-shadow:0 4px 10px rgba(255,140,66,.25);
 }
 
 /* Inputs */
 
-.rr-input,
-.rr-select{
+.login-input{
     width:100%;
     padding:14px 16px;
     border:1px solid #ddd;
     border-radius:12px;
-    background:#fff;
     font-size:15px;
     box-sizing:border-box;
-    outline:none;
     transition:.2s;
+    outline:none;
 }
 
-.rr-input:focus,
-.rr-select:focus{
+.login-input:focus{
     border-color:#ff8c42;
     box-shadow:0 0 0 3px rgba(255,140,66,.12);
 }
 
-/* Select */
-
-.rr-select{
-    cursor:pointer;
-}
-
 /* Error */
 
-.rr-error{
+.login-error{
     margin:0;
     padding:12px;
     border-radius:10px;
-    background:#fff1f1;
-    color:#dc2626;
+    background:#fff0f0;
+    color:#d62828;
     font-size:.9rem;
     text-align:center;
 }
 
 /* Button */
 
-.rr-btn{
+.login-btn{
     padding:14px;
     border:none;
     border-radius:12px;
@@ -104,51 +129,65 @@
     transition:.25s;
 }
 
-.rr-btn:hover{
+.login-btn:hover{
     background:#f57c22;
     transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(255,140,66,.28);
+    box-shadow:0 8px 20px rgba(255,140,66,.3);
 }
 
-.rr-btn:active{
+.login-btn:active{
     transform:translateY(0);
 }
 
 /* Footer */
 
-.rr-footer{
-    margin-top:24px;
+.login-footer{
+    margin-top:28px;
     text-align:center;
     color:#666;
     font-size:.95rem;
 }
 
-.rr-link{
+.login-footer p{
+    margin:0 0 12px;
+}
+
+.login-link{
+    display:block;
+    margin-top:8px;
     color:#ff8c42;
     font-weight:600;
     text-decoration:none;
     transition:.2s;
 }
 
-.rr-link:hover{
+.login-link:hover{
     color:#f57c22;
     text-decoration:underline;
 }
 
 /* Responsive */
 
-@media(max-width:600px){
+@media(max-width:520px){
 
-    .rr-page{
+    .login-page{
         padding:18px;
     }
 
-    .rr-card{
-        padding:28px 22px;
+    .login-container{
+        padding:26px 22px;
     }
 
-    .rr-title{
-        font-size:1.8rem;
+    .login-title{
+        font-size:1.9rem;
+    }
+
+    .login-account-menu{
+        flex-wrap:wrap;
+    }
+
+    .login-account-item{
+        flex:1 1 calc(50% - 4px);
     }
 
 }

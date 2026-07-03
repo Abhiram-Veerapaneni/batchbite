@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import restaurantRoutes from "./routes/restaurantRoutes.js";
 
 import menuItemRoutes from "./routes/menuItemRoutes.js";
@@ -39,6 +40,8 @@ app.use(cookieParser());
 
 // Routes 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/users", userRoutes);
 
 app.use("/api/restaurants", restaurantRoutes);
 

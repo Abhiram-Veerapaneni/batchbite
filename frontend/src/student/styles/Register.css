@@ -1,6 +1,6 @@
 /* Page */
 
-.rr-page{
+.register-page{
     min-height:100vh;
     display:flex;
     justify-content:center;
@@ -11,11 +11,11 @@
     box-sizing:border-box;
 }
 
-/* Card */
+/* Container */
 
-.rr-card{
+.register-container{
     width:100%;
-    max-width:500px;
+    max-width:520px;
     background:#fff;
     padding:36px;
     border-radius:18px;
@@ -25,16 +25,16 @@
 
 /* Header */
 
-.rr-title{
-    margin:0 0 8px;
+.register-title{
+    margin:0;
     text-align:center;
     font-size:2rem;
     font-weight:700;
     color:#ff8c42;
 }
 
-.rr-title::after{
-    content:"Join BatchBite as a Restaurant";
+.register-title::after{
+    content:"Create your BatchBite account";
     display:block;
     margin-top:8px;
     font-size:.95rem;
@@ -44,7 +44,7 @@
 
 /* Form */
 
-.rr-form{
+.register-form{
     display:flex;
     flex-direction:column;
     gap:18px;
@@ -53,8 +53,8 @@
 
 /* Inputs */
 
-.rr-input,
-.rr-select{
+.register-input,
+.register-select{
     width:100%;
     padding:14px 16px;
     border:1px solid #ddd;
@@ -66,21 +66,19 @@
     transition:.2s;
 }
 
-.rr-input:focus,
-.rr-select:focus{
+.register-input:focus,
+.register-select:focus{
     border-color:#ff8c42;
     box-shadow:0 0 0 3px rgba(255,140,66,.12);
 }
 
-/* Select */
-
-.rr-select{
+.register-select{
     cursor:pointer;
 }
 
 /* Error */
 
-.rr-error{
+.register-error{
     margin:0;
     padding:12px;
     border-radius:10px;
@@ -92,7 +90,7 @@
 
 /* Button */
 
-.rr-btn{
+.register-btn{
     padding:14px;
     border:none;
     border-radius:12px;
@@ -104,33 +102,33 @@
     transition:.25s;
 }
 
-.rr-btn:hover{
+.register-btn:hover{
     background:#f57c22;
     transform:translateY(-2px);
     box-shadow:0 8px 20px rgba(255,140,66,.28);
 }
 
-.rr-btn:active{
+.register-btn:active{
     transform:translateY(0);
 }
 
 /* Footer */
 
-.rr-footer{
+.register-footer{
     margin-top:24px;
     text-align:center;
     color:#666;
     font-size:.95rem;
 }
 
-.rr-link{
+.register-link{
     color:#ff8c42;
     font-weight:600;
     text-decoration:none;
     transition:.2s;
 }
 
-.rr-link:hover{
+.register-link:hover{
     color:#f57c22;
     text-decoration:underline;
 }
@@ -139,15 +137,15 @@
 
 @media(max-width:600px){
 
-    .rr-page{
+    .register-page{
         padding:18px;
     }
 
-    .rr-card{
+    .register-container{
         padding:28px 22px;
     }
 
-    .rr-title{
+    .register-title{
         font-size:1.8rem;
     }
 

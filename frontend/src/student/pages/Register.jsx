@@ -5,6 +5,8 @@ import { registerUser } from "../../services/authService";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+import "../styles/Register.css";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Register() {

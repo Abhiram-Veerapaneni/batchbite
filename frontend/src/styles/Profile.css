@@ -1,14 +1,15 @@
 /* Page */
 
 .rp-page{
-    min-height:100vh;
-    padding:32px;
-    background:#fafafa;
+    /* min-height:100vh; */
+    /* padding:32px; */
+    /* background:#fafafa;
     font-family:"Poppins",sans-serif;
-    box-sizing:border-box;
+    box-sizing:border-box; */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
 }
-
-/* Header */
 
 /* Header */
 

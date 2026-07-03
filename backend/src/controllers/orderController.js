@@ -7,7 +7,10 @@ import {
     decrementBatchGroup,
     moveOrderBetweenBatchGroup,
 } from "../services/batchGroupService.js";
+
 import { ApiError } from "../utils/apiError.js";
+
+import { createRestaurantLedgers, updateRestaurantLedgerStatus } from "./restaurantLedgerController.js";
 
 // Create order -> service after payment is done
 export const createOrder = async (orderData) => {
@@ -69,9 +72,9 @@ export const createOrder = async (orderData) => {
     });
 
     await incrementBatchGroup(order, slotDoc);
+    await createRestaurantLedgers(order); // with status = "pending"
 
     return order;
-
 };
 
 // Get order history
@@ -200,11 +203,14 @@ export const cancelOrder = async (req, res) => {
         order.canModifyUntil = new Date();
         const payment = order.payment;
         payment.refundStatus = "requested";
+
         await payment.save();
         await order.save();
 
         // decrease total orders in BatchGroup
         await decrementBatchGroup(order);
+        // cancel restaurant Ledgers
+        await updateRestaurantLedgerStatus(order, "cancelled");
 
         return res.status(200).json({
             message: "Order cancelled successfully"

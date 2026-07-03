@@ -1,6 +1,4 @@
-/* ===========================
-   Agent Dashboard
-=========================== */
+/* Agent Dashboard */
 
 .ad-page{
     padding:30px;
@@ -8,13 +6,10 @@
     justify-content:center;
     align-items:flex-start;
     min-height:calc(100vh - 70px);
-    background:#fff7f1;
     font-family:"Poppins",sans-serif;
 }
 
-/* ===========================
-   Card
-=========================== */
+/* Card */
 
 .ad-card{
     width:100%;
@@ -25,9 +20,7 @@
     box-shadow:0 8px 24px rgba(0,0,0,0.08);
 }
 
-/* ===========================
-   Header
-=========================== */
+/* Header */
 
 .ad-header{
     display:flex;
@@ -43,9 +36,7 @@
     font-weight:600;
 }
 
-/* ===========================
-   Status Badge
-=========================== */
+/* Status Badge */
 
 .ad-status{
     padding:8px 18px;
@@ -70,9 +61,7 @@
     color:#2e7d32;
 }
 
-/* ===========================
-   Details
-=========================== */
+/* Details */
 
 .ad-details{
     display:flex;
@@ -100,9 +89,7 @@
     color:#333;
 }
 
-/* ===========================
-   Buttons
-=========================== */
+/* Buttons */
 
 .ad-actions{
     margin-top:35px;
@@ -139,9 +126,7 @@
     background:#218838;
 }
 
-/* ===========================
-   Empty State
-=========================== */
+/* Empty State */
 
 .ad-empty{
     margin:80px auto;
@@ -163,9 +148,7 @@
     margin:0;
 }
 
-/* ===========================
-   Loading
-=========================== */
+/* Loading */
 
 .ad-loading{
     display:flex;
@@ -177,9 +160,7 @@
     color:#555;
 }
 
-/* ===========================
-   Responsive
-=========================== */
+/* Responsive */
 
 @media (max-width:640px){
 

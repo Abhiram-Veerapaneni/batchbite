@@ -1,13 +1,12 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-import { changeRestaurantPassword } from "../services/RestaurantServices";
-
 import "../styles/ChangePasswordModal.css";
 
 function ChangePasswordModal({
     isOpen,
-    onClose
+    onClose,
+    onChangePassword
 }) {
 
     const [form, setForm] = useState({
@@ -63,7 +62,7 @@ function ChangePasswordModal({
 
             setLoading(true);
 
-            await changeRestaurantPassword({
+            await onChangePassword({
                 currentPassword: form.currentPassword,
                 newPassword: form.newPassword
             });

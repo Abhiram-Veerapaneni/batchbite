@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 function RestaurantNavbar() {
 
-    const {account} = useContext(AuthContext);
+    const { account } = useContext(AuthContext);
 
     const getClassName = ({ isActive }) =>
         isActive ? "rn-link rn-active" : "rn-link";
@@ -40,6 +40,11 @@ function RestaurantNavbar() {
                 >
                     Orders
                 </NavLink>
+
+                <NavLink to="ledgers" className={getClassName}>
+                    Ledgers
+                </NavLink>
+
 
                 <NavLink
                     to="/restaurant/profile"

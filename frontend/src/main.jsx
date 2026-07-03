@@ -9,7 +9,6 @@ import { CartProvider } from './context/CartContext.jsx';
 import { Toaster } from "react-hot-toast";
 
 import "./student/styles/global.css";
-import "./student/styles/pages.css"
 import "./student/styles/navbar.css";
 import "./student/styles/dashboard.css";
 import "./student/styles/foodCard.css";
@@ -33,6 +32,8 @@ import "./agent/styles/AgentNavBar.css"
 import "./agent/styles/DeliveryHistory.css"
 import "./agent/styles/AgentProfile.css"
 import "./agent/styles/AgentDashboard.css"
+
+import "./styles/Profile.css";
 
 createRoot(document.getElementById("root")).render(
     <CartProvider>

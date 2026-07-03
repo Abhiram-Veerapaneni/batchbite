@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
+    changeRestaurantPassword,
     getRestaurantProfile,
     updateRestaurantProfile
 } from "../services/RestaurantServices";
 
-import ChangePasswordModal from "../components/ChangePasswordModal";
+import ChangePasswordModal from "../../components/ChangePasswordModal";
 
-import "../styles/RestaurantProfile.css";
 import { AuthContext } from "../../context/AuthContext";
 
 function RestaurantProfile() {
@@ -291,6 +291,7 @@ function RestaurantProfile() {
                 onClose={() =>
                     setShowPasswordModal(false)
                 }
+                onChangePassword={changeRestaurantPassword}
             />
         </div>
     );

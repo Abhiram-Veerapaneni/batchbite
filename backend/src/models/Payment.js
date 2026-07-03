@@ -33,7 +33,7 @@ const paymentSchema = new mongoose.Schema(
             ref: "Order"
         },
 
-        refundStatus: {
+        refundStatus: { // only for student
             type: String,
             enum: ["not_requested", "requested", "processing", "success", "failed"],
             default: "not_requested"

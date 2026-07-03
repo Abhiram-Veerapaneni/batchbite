@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     try {
 
       await logoutAccount();   // call backend logout route
-
+      window.location.href = "/"
     } catch (err) {
 
       console.error(err);

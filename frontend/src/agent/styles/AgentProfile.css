@@ -1,11 +1,8 @@
-/* ===========================
-   Page
-=========================== */
+/* Page */
 
 .agent-profile-page{
     min-height:100vh;
     padding:30px;
-    background:#fff7f1;
     font-family:"Poppins",sans-serif;
     box-sizing:border-box;
     display:flex;
@@ -13,9 +10,7 @@
     align-items:flex-start;
 }
 
-/* ===========================
-   Card
-=========================== */
+/* Card */
 
 .agent-profile-card{
     width:100%;
@@ -26,9 +21,7 @@
     box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
-/* ===========================
-   Header
-=========================== */
+/* Header */
 
 .agent-profile-header{
     display:flex;
@@ -61,9 +54,7 @@
     color:#777;
 }
 
-/* ===========================
-   Details
-=========================== */
+/* Details */
 
 .agent-profile-details{
     display:flex;
@@ -92,9 +83,7 @@
     font-weight:500;
 }
 
-/* ===========================
-   Status
-=========================== */
+/* Status */
 
 .agent-profile-status{
     color:#fff;
@@ -117,9 +106,7 @@
     background:#757575;
 }
 
-/* ===========================
-   Zones
-=========================== */
+/* Zones */
 
 .agent-profile-zones{
     display:flex;
@@ -137,9 +124,7 @@
     font-weight:600;
 }
 
-/* ===========================
-   Actions
-=========================== */
+/* Actions */
 
 .agent-profile-actions{
     margin-top:35px;
@@ -163,9 +148,7 @@
     background:#c62828;
 }
 
-/* ===========================
-   Responsive
-=========================== */
+/* Responsive */
 
 @media(max-width:768px){
 

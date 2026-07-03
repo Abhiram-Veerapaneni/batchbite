@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 import { getRestaurantOrderHistory } from "../services/RestaurantServices";
-import { getDeliveryZones, getSlots } from "../services/OtherServices";
+import { getZones, getSlots } from "../../services/OtherServices";
 
 import "../styles/Orders.css";
 import { formatTime } from "../../utils/timeUtils";
@@ -102,7 +102,7 @@ function RestaurantOrderHistory() {
             try {
 
                 const [zones, slots] = await Promise.all([
-                    getDeliveryZones(),
+                    getZones(),
                     getSlots()
                 ]);
 

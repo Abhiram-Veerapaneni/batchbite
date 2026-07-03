@@ -43,6 +43,7 @@ import RestaurantDashboard from "./restaurant/pages/RestaurantDashboard";
 import MenuPage from "./restaurant/pages/MenuPage";
 import Orders from "./restaurant/pages/Orders";
 import RestaurantProfile from "./restaurant/pages/RestaurantProfile";
+import RestaurantLedgerPage from "./components/RestaurantLedgerPage";
 
 
 function App() {
@@ -98,6 +99,8 @@ function App() {
 
                     <Route path="analytics" element={<Analytics />} />
 
+                    <Route path="ledgers" element={<RestaurantLedgerPage isAdmin={true}/>} />
+
                 </Route>
 
                 {/* Agent Routes */}
@@ -129,7 +132,7 @@ function App() {
                     <Route path="menu" element={<MenuPage />} />
                     <Route path="orders" element={<Orders />} />
                     <Route path="profile" element={<RestaurantProfile />} />
-                    
+                    <Route path="ledgers" element={<RestaurantLedgerPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

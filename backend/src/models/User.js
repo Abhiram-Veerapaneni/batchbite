@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
+    phone : {
+      type: String
+    },
+
     password: {
       type: String,
       required: true,
@@ -35,13 +39,13 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
-    address : {
-      addressLine : {
+    address: {
+      addressLine: {
         type: String,
         required: true
       },
-      zone : {
-        type : mongoose.Schema.Types.ObjectId,
+      zone: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Zone"
       }
     },
@@ -59,6 +63,11 @@ const userSchema = new mongoose.Schema(
     profileImage: {
       type: String,
       default: ""
+    },
+
+    profileImagePublicId: {
+      type: String,
+      default: ""
     }
   },
   {
@@ -69,22 +78,22 @@ const userSchema = new mongoose.Schema(
 // Hash password
 userSchema.pre("save", async function () {
 
-    // prevent rehashing when updating
-    if(!this.isModified("password")) {
-        return next();
-    }
+  // prevent rehashing when updating
+  if (!this.isModified("password")) {
+    return;
+  }
 
-    this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
 
 });
 
 // compare passwords 
-userSchema.methods.matchPassword = async function(enteredPassword) {
+userSchema.methods.matchPassword = async function (enteredPassword) {
 
-    return await bcrypt.compare(
-        enteredPassword,
-        this.password
-    );
+  return await bcrypt.compare(
+    enteredPassword,
+    this.password
+  );
 };
 
 const User = mongoose.model("User", userSchema);

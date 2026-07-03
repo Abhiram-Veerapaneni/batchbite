@@ -38,6 +38,10 @@ function AdminSidebar() {
                     Analytics
                 </NavLink>
 
+                <NavLink to="ledgers">
+                    Ledgers
+                </NavLink>
+
             </nav>
             <NavLink to="/" onClick={logout}>
                Logout

@@ -8,6 +8,7 @@ import {
 import Order from "../models/Order.js";
 import { ApiError } from "../utils/apiError.js";
 import { createOrder } from "./orderController.js";
+import { settleRestaurantLedger } from "../services/settlementService.js";
 
 export const createPaymentOrder = asyncHandler(async (req, res) => {
 
@@ -148,3 +149,18 @@ export const refundPayment = asyncHandler(async (req, res) => {
     });
 
 })
+
+// settle payments
+export const settleLedger = asyncHandler(async (req, res) => {
+
+    const { ledgerId } = req.params;
+
+    const ledger = await settleRestaurantLedger(ledgerId);
+
+    return res.status(200).json({
+        success: true,
+        message: "Restaurant settled successfully.",
+        settlement: ledger
+    });
+
+});

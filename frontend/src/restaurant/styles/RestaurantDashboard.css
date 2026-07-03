@@ -225,6 +225,12 @@
     color: #2e7d32;
 }
 
+.rd-batch-status.rd-cancelled {
+    background:#fdeaea;
+    color:#dc2626;
+}
+
+
 /* Delivery Status */
 
 .rd-delivery-status.rd-waiting {
@@ -240,6 +246,11 @@
 .rd-delivery-status.rd-delivered {
     background: #eaf8ed;
     color: #2e7d32;
+}
+
+.rd-delivery-status.rd-cancelled {
+    background:#fdeaea;
+    color:#dc2626;
 }
 
 .rd-time {

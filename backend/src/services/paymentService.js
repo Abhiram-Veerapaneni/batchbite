@@ -40,7 +40,7 @@ export const createRazorpayOrderService = async ({
 };
 
 
-export const verifyRazorpayPaymentService  = async ({
+export const verifyRazorpayPaymentService = async ({
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature

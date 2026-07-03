@@ -53,7 +53,7 @@ export const protect = async (req, res, next) => {
         // making user available to middleware/controllers
         req.account = account;
         req.accountType = accountType;
-        
+
         next();
 
     } catch (error) {

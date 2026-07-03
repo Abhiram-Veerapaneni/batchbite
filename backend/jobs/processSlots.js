@@ -5,6 +5,7 @@ import Order from "../src/models/Order.js";
 import Batch from "../src/models/Batch.js";
 import BatchGroup from "../src/models/BatchGroup.js";
 import { getOrdersForBatchGroup } from "../src/utils/getOrdersForBatchGroup.js";
+import { updateRestaurantLedgerStatus } from "../src/controllers/restaurantLedgerController.js";
 
 cron.schedule("* * * * *", async() => {
 
@@ -13,7 +14,7 @@ cron.schedule("* * * * *", async() => {
         console.log("Running Slot processor ----");
 
         // 1. close expired slots
-        await Slot.updateMany(
+        const res = await Slot.updateMany(
             {
                 status: "open",
                 endTime: { $lt : new Date() }
@@ -22,6 +23,7 @@ cron.schedule("* * * * *", async() => {
                 $set: { status : "closed" }
             }
         )
+        console.log(res);
 
         // 2. Process closed slots
         const closedSlots = await Slot.find({
@@ -79,7 +81,11 @@ cron.schedule("* * * * *", async() => {
                             }
                         }
                     )
-                    console.log(result);
+
+                    // process payments to restaurants
+                    for (const order of orders) {
+                        const ledger = await updateRestaurantLedgerStatus(order, "receivable");
+                    }
 
                     // updated batchGroup
                     batchGroup.status = "batched";

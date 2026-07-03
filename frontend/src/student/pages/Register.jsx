@@ -23,7 +23,6 @@ function Register() {
         addressLine: "",
         zone: ""
     });
-    const [role, setRole] = useState("student");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -53,7 +52,6 @@ function Register() {
             password,
             confirmPassword,
             university,
-            role,
             address
         };
 
@@ -132,16 +130,6 @@ function Register() {
                             })
                         }
 
-                    </select>
-
-
-                    <select
-                        className="register-select"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                    >
-                        <option value="student">Student</option>
-                        <option value="restaurant">Restaurant</option>
                     </select>
 
                     <input

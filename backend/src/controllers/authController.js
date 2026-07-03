@@ -17,7 +17,6 @@ const registerUser = async (req, res) => {
             password,
             confirmPassword,
             university,
-            role,
             address
         } = req.body;
 
@@ -41,19 +40,16 @@ const registerUser = async (req, res) => {
             name,
             email,
             password,
-            role,
             university,
             address
         });
 
-        // Create cart for user
-        if (role === "user") {
-            await Cart.create({
-                user: user._id,
-                items: [],
-                restaurantZone: null
-            });
-        }
+        await Cart.create({
+            user: user._id,
+            items: [],
+            restaurantZone: null
+        });
+
 
         // generate JWT cookie
         generateToken(res, user._id, user.role);
@@ -79,7 +75,7 @@ const registerUser = async (req, res) => {
 const registerRestaurant = async (req, res) => {
 
     try {
-        
+
         const {
             name,
             email,
@@ -96,10 +92,10 @@ const registerRestaurant = async (req, res) => {
         }
 
         // check if restaurant already exists
-        const existingRestaurant = await Restaurant.findOne( { email } );
+        const existingRestaurant = await Restaurant.findOne({ email });
 
         if (existingRestaurant) {
-            
+
             return res.status(400).json({
                 message: "Restaurant already exists"
             })
@@ -114,7 +110,7 @@ const registerRestaurant = async (req, res) => {
         })
 
         generateToken(res, restaurant._id, "restaurant");
-        
+
         res.status(200).json({
             name: restaurant.name,
             email: restaurant.email,
@@ -198,15 +194,15 @@ const loginAccount = async (req, res) => {
 
         let account = null
 
-        if(accountType === "student" || accountType === "admin")
+        if (accountType === "student" || accountType === "admin")
             account = await User.findOne({ email }).select("+password");
 
-        if(accountType === "restaurant") 
+        if (accountType === "restaurant")
             account = await Restaurant.findOne({ email }).select("+password");
 
-        if(accountType === "agent") 
+        if (accountType === "agent")
             account = await Agent.findOne({ email }).select("+password");
-    
+
 
         if (!account) {
             return res.status(401).json({

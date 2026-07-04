@@ -17,7 +17,7 @@ const generateToken = (res, accountId, accountType) => {
 
     res.cookie("jwt", token, {
         httpOnly: true,
-        secure: isProduction,
+        secure: isProduction ,
         sameSite: isProduction ? "none" : "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });

@@ -32,6 +32,7 @@ export const getCurrentBatchGroups = async (req, res) => {
 // GET /api/batch-groups/current/:slotId/:deliveryZoneId/:restaurantId/
 export const getTotalOrdersInCurrentBatchGroup = async (req, res) => {
     try {
+        
         const { slotId, deliveryZoneId, restaurantZoneId } = req.params;
 
         const batchGroup = await BatchGroup.findOne({

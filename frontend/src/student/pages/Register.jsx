@@ -18,6 +18,7 @@ function Register() {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [university, setUniversity] = useState("VIT AP");
     const [address, setAddress] = useState({
         addressLine: "",
@@ -49,6 +50,7 @@ function Register() {
         const registerData = {
             name,
             email,
+            phone,
             password,
             confirmPassword,
             university,
@@ -94,6 +96,15 @@ function Register() {
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    <input
+                        className="rr-input"
+                        type="text"
+                        placeholder="Phone Number"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
                     />
 
                     <select

@@ -37,8 +37,6 @@ export const registerRestaurant = async (data) => {
 
 export const loginAccount = async (userData) => {
 
-    console.log(userData);
-
     const response = await axios.post(
         `${API_URL}/auth/login`,
         userData,

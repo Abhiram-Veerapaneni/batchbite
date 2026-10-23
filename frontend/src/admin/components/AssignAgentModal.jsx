@@ -29,8 +29,6 @@ function AssignAgentModal({
 
     const handleAssign = async () => {
 
-        console.log("Clicked")
-
         if (!selectedAgent) {
 
             toast.error("Select an agent");

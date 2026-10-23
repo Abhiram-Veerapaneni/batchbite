@@ -49,7 +49,6 @@ function OrderHistory() {
             });
 
             setBatchInfos(batchData);
-            console.log(batchData);
 
         } catch (error) {
             console.log(error);

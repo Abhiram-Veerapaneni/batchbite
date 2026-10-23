@@ -8,8 +8,6 @@ export const settleRestaurantLedger = async (ledgerId) => {
 
     const ledger = await RestaurantLedger.findById(ledgerId);
 
-    console.log("hello")
-
     if (!ledger) {
         throw new ApiError(404, "Ledger not found");
         throw new ApiError

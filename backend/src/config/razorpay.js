@@ -1,7 +1,7 @@
 import Razorpay from "razorpay";
 
-console.log("KEY_ID =", process.env.RAZORPAY_KEY_ID);
-console.log("SECRET EXISTS =", process.env.RAZORPAY_KEY_SECRET);
+// console.log("KEY_ID =", process.env.RAZORPAY_KEY_ID);
+// console.log("SECRET EXISTS =", process.env.RAZORPAY_KEY_SECRET);
 
 let razorpayInstance;
 

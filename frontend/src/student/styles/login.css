@@ -191,3 +191,32 @@
     }
 
 }
+
+/* Google Sign In & Divider */
+.login-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0 16px;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.login-divider span {
+    padding: 0 12px;
+    color: #888;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.login-google-section {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

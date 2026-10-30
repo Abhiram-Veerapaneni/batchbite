@@ -4,6 +4,7 @@ import {
     registerUser,
     registerRestaurant,
     loginAccount,
+    googleAuth,
     logoutAccount,
     getCurrentAccount,
     registerAgent
@@ -21,6 +22,8 @@ router.post("/student/register", registerUser);
 router.post("/restaurant/register", registerRestaurant);
 
 router.post("/login", loginAccount);
+
+router.post("/google", googleAuth);
 
 // Protected routes
 

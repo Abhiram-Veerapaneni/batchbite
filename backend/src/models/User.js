@@ -23,8 +23,19 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
+      required: false,
       select: false // Don't include password in queries by default
+    },
+
+    googleId: {
+      type: String,
+      default: null
+    },
+
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local"
     },
 
     role: {
@@ -35,18 +46,19 @@ const userSchema = new mongoose.Schema(
 
     university: {
       type: String,
-      required: true,
+      default: "VIT AP",
       trim: true
     },
 
     address: {
       addressLine: {
         type: String,
-        required: true
+        default: ""
       },
       zone: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Zone"
+        ref: "Zone",
+        default: null
       }
     },
 
@@ -78,8 +90,8 @@ const userSchema = new mongoose.Schema(
 // Hash password
 userSchema.pre("save", async function () {
 
-  // prevent rehashing when updating
-  if (!this.isModified("password")) {
+  // prevent rehashing when updating or if password is not set
+  if (!this.isModified("password") || !this.password) {
     return;
   }
 
@@ -89,6 +101,10 @@ userSchema.pre("save", async function () {
 
 // compare passwords 
 userSchema.methods.matchPassword = async function (enteredPassword) {
+
+  if (!this.password) {
+    return false;
+  }
 
   return await bcrypt.compare(
     enteredPassword,

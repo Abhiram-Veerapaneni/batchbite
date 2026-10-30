@@ -4,6 +4,9 @@ import User from "../models/User.js";
 import Cart from "../models/Cart.js";
 import Restaurant from "../models/Restaurant.js";
 import Agent from "../models/Agent.js";
+import { OAuth2Client } from "google-auth-library";
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // for new Registration
 
@@ -246,6 +249,151 @@ const loginAccount = async (req, res) => {
     }
 };
 
+// Google Client Sign-In / Sign-Up
+const googleAuth = async (req, res) => {
+    try {
+        const { credential, accountType = "student" } = req.body;
+
+        if (!credential) {
+            return res.status(400).json({
+                message: "Google credential is required"
+            });
+        }
+
+        let payload;
+        try {
+            const ticket = await googleClient.verifyIdToken({
+                idToken: credential,
+                audience: process.env.GOOGLE_CLIENT_ID || undefined
+            });
+            payload = ticket.getPayload();
+        } catch (verifyError) {
+            console.error("GOOGLE TOKEN VERIFICATION ERROR:", verifyError.message);
+            return res.status(401).json({
+                message: "Invalid Google token: " + verifyError.message
+            });
+        }
+
+        if (!payload || !payload.email) {
+            return res.status(400).json({
+                message: "Invalid Google user data"
+            });
+        }
+
+        const { sub: googleId, email, name, picture, email_verified } = payload;
+        const normalizedEmail = email.toLowerCase().trim();
+
+        let account = null;
+        let role = accountType;
+
+        if (accountType === "student" || accountType === "admin") {
+            account = await User.findOne({ email: normalizedEmail });
+
+            if (account) {
+                // Prevent login for disabled users
+                if (!account.isActive) {
+                    return res.status(403).json({
+                        message: "Account has been disabled"
+                    });
+                }
+
+                let needsSave = false;
+                if (!account.googleId) {
+                    account.googleId = googleId;
+                    needsSave = true;
+                }
+                if (!account.profileImage && picture) {
+                    account.profileImage = picture;
+                    needsSave = true;
+                }
+                if (email_verified && !account.isVerified) {
+                    account.isVerified = true;
+                    needsSave = true;
+                }
+                if (needsSave) {
+                    await account.save();
+                }
+
+                role = account.role;
+            } else {
+                if (accountType === "admin") {
+                    return res.status(403).json({
+                        message: "Admin account does not exist for this email"
+                    });
+                }
+
+                // Auto-register new student user
+                account = await User.create({
+                    name: name || "Student",
+                    email: normalizedEmail,
+                    googleId,
+                    authProvider: "google",
+                    role: "student",
+                    isVerified: !!email_verified,
+                    profileImage: picture || "",
+                    university: "VIT AP",
+                    address: {
+                        addressLine: "",
+                        zone: null
+                    }
+                });
+
+                // Create initial cart
+                await Cart.create({
+                    user: account._id,
+                    items: [],
+                    restaurantZone: null
+                });
+
+                role = "student";
+            }
+        } else if (accountType === "restaurant") {
+            account = await Restaurant.findOne({ email: normalizedEmail });
+            if (!account) {
+                return res.status(404).json({
+                    message: "No restaurant found with this Google email. Please register your restaurant first."
+                });
+            }
+            role = "restaurant";
+        } else if (accountType === "agent") {
+            account = await Agent.findOne({ email: normalizedEmail });
+            if (!account) {
+                return res.status(404).json({
+                    message: "No delivery agent found with this Google email."
+                });
+            }
+            if (account.status === "inactive") {
+                return res.status(403).json({
+                    message: "Agent account is inactive"
+                });
+            }
+            role = "agent";
+        } else {
+            return res.status(400).json({
+                message: "Unsupported account type"
+            });
+        }
+
+        // generate jwt cookie
+        generateToken(res, account._id, role);
+
+        return res.status(200).json({
+            _id: account._id,
+            name: account.name,
+            email: account.email,
+            role,
+            accountType: role,
+            profileImage: account.profileImage || picture || ""
+        });
+
+    } catch (error) {
+        console.error("GOOGLE AUTH ERROR:", error);
+        return res.status(500).json({
+            message: error.message || "Google authentication failed"
+        });
+    }
+};
+
 // Logout
 const logoutAccount = async (req, res) => {
 
@@ -275,6 +423,7 @@ export {
     registerRestaurant,
     registerAgent,
     loginAccount,
+    googleAuth,
     logoutAccount,
     getCurrentAccount
 }

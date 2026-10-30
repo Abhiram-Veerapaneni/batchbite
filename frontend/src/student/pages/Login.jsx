@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { loginAccount } from "../../services/authService.js";
+import { loginAccount, googleLoginAccount } from "../../services/authService.js";
 import { AuthContext } from "../../context/AuthContext";
+import GoogleSignInButton from "../../components/GoogleSignInButton.jsx";
 
 import toast from "react-hot-toast";
 
@@ -92,6 +93,30 @@ function Login() {
 
     };
 
+    const handleGoogleSuccess = async (credential) => {
+        try {
+            setError("");
+            const data = await googleLoginAccount(credential, account_type);
+            await refreshAccount();
+            toast.success("Signed in with Google successfully!");
+
+            const destinationRole = data.role || account_type;
+            if (destinationRole === "student") {
+                navigate("/dashboard");
+            } else {
+                navigate(`/${destinationRole}/dashboard`);
+            }
+        } catch (err) {
+            setError(
+                err?.response?.data?.message || "Google sign-in failed"
+            );
+        }
+    };
+
+    const handleGoogleError = (errorMessage) => {
+        setError(errorMessage || "Google sign-in was unsuccessful. Please try again.");
+    };
+
     return (
 
         <div className="login-page">
@@ -174,7 +199,8 @@ function Login() {
                         </button>
 
                     </div>
-                                        <input
+
+                    <input
                         className="login-input"
                         type="email"
                         placeholder="Email address"
@@ -210,6 +236,18 @@ function Login() {
                     </button>
 
                 </form>
+
+                <div className="login-divider">
+                    <span>OR</span>
+                </div>
+
+                <div className="login-google-section">
+                    <GoogleSignInButton
+                        onSuccess={handleGoogleSuccess}
+                        onError={handleGoogleError}
+                        text="continue_with"
+                    />
+                </div>
 
                 <div className="login-footer">
 

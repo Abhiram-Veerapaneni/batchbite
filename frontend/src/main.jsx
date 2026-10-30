@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from './context/CartContext.jsx';
 
@@ -35,10 +36,14 @@ import "./agent/styles/AgentDashboard.css"
 
 import "./styles/Profile.css";
 
+const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "not-configured";
+
 createRoot(document.getElementById("root")).render(
-    <CartProvider>
-        <AuthProvider>
+    <GoogleOAuthProvider clientId={googleClientId}>
+        <CartProvider>
+            <AuthProvider>
                 <App />
-        </AuthProvider>
-    </CartProvider>
+            </AuthProvider>
+        </CartProvider>
+    </GoogleOAuthProvider>
 );

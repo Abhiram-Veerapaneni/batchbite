@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { registerUser } from "../../services/authService";
+import { registerUser, googleLoginAccount } from "../../services/authService";
+import { AuthContext } from "../../context/AuthContext";
+import GoogleSignInButton from "../../components/GoogleSignInButton";
 
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -12,6 +14,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 function Register() {
 
     const navigate = useNavigate();
+    const { refreshAccount } = useContext(AuthContext);
     const [error, setError] = useState("");
 
     // name, email, university, role, password
@@ -62,6 +65,7 @@ function Register() {
             setError("");
 
             await registerUser(registerData);
+            await refreshAccount();
 
             toast.success("Registered successfully!");
 
@@ -70,6 +74,22 @@ function Register() {
         } catch (err) {
             setError(err?.response?.data?.message || "Registration failed");
         }
+    };
+
+    const handleGoogleSuccess = async (credential) => {
+        try {
+            setError("");
+            await googleLoginAccount(credential, "student");
+            await refreshAccount();
+            toast.success("Registered and logged in with Google!");
+            navigate("/dashboard");
+        } catch (err) {
+            setError(err?.response?.data?.message || "Google sign-up failed");
+        }
+    };
+
+    const handleGoogleError = (errorMessage) => {
+        setError(errorMessage || "Google sign-up was unsuccessful. Please try again.");
     };
 
     return (
@@ -174,6 +194,19 @@ function Register() {
                     </button>
 
                 </form>
+
+                <div className="register-divider">
+                    <span>OR</span>
+                </div>
+
+                <div className="register-google-section">
+                    <GoogleSignInButton
+                        onSuccess={handleGoogleSuccess}
+                        onError={handleGoogleError}
+                        text="signup_with"
+                    />
+                </div>
+
                 <p className="register-footer">
                     Already have an account?{" "}
                     <Link className="register-link" to="/">

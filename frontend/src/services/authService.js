@@ -48,6 +48,23 @@ export const loginAccount = async (userData) => {
     return response.data;
 };
 
+// Google Sign-In API call
+export const googleLoginAccount = async (credential, accountType = "student") => {
+
+    const response = await axios.post(
+        `${API_URL}/auth/google`,
+        {
+            credential,
+            accountType
+        },
+        {
+            withCredentials: true
+        }
+    );
+
+    return response.data;
+};
+
 export const logoutAccount = async () => {
 
     const response = await axios.post(

@@ -29,6 +29,10 @@ const agentSchema = new mongoose.Schema(
             select: false
         },
 
+        passwordChangedAt: {
+            type: Date
+        },
+
         phone: {
             type: String,
             required: true
@@ -72,6 +76,11 @@ agentSchema.pre("save", async function () {
     }
 
     this.password = await bcrypt.hash(this.password, 10);
+
+    // Update passwordChangedAt if password is modified on an existing agent
+    if (!this.isNew) {
+        this.passwordChangedAt = new Date(Date.now() - 1000);
+    }
 
 });
 

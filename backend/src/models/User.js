@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
       select: false // Don't include password in queries by default
     },
 
+    passwordChangedAt: {
+      type: Date
+    },
+
     googleId: {
       type: String,
       default: null
@@ -96,6 +100,11 @@ userSchema.pre("save", async function () {
   }
 
   this.password = await bcrypt.hash(this.password, 10);
+
+  // Update passwordChangedAt if password is modified on an existing user
+  if (!this.isNew) {
+    this.passwordChangedAt = new Date(Date.now() - 1000);
+  }
 
 });
 

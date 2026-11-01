@@ -38,16 +38,26 @@ export const protect = async (req, res, next) => {
             account = await Restaurant.findById(decoded.accountId);
     
         if (!account) {
-                return res.status(401).json({
-                    message: "Account not found"
-                });
-            }
+            return res.status(401).json({
+                message: "Account not found"
+            });
+        }
 
         // Prevent disabled accounts
         if (accountType === "student" && !account.isActive) {
             return res.status(403).json({
                 message: "Account has been disabled"
             });
+        }
+
+        // Check if password was changed after the token was issued
+        if (account.passwordChangedAt) {
+            const changedTimestamp = Math.floor(account.passwordChangedAt.getTime() / 1000);
+            if (decoded.iat < changedTimestamp) {
+                return res.status(401).json({
+                    message: "Password was recently changed. Please log in again."
+                });
+            }
         }
 
         // making user available to middleware/controllers

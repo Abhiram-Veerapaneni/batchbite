@@ -2,6 +2,7 @@ import Restaurant from "../models/Restaurant.js";
 import Order from "../models/Order.js";
 import uploadToCloudinary from "../utils/uploadToCloudinary.js";
 import cloudinary from "../config/cloudinary.js";
+import generateToken from "../utils/generateToken.js";
 
 // get all restaurants (filtered by uni/zone)
 
@@ -560,6 +561,9 @@ export const changeRestaurantPassword = async (req, res) => {
         restaurant.password = newPassword;
 
         await restaurant.save();
+
+        // Re-issue a fresh JWT cookie for the current session
+        generateToken(res, restaurant._id, "restaurant");
 
         return res.status(200).json({
             message: "Password updated successfully"

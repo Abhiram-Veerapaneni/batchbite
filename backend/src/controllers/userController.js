@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import uploadToCloudinary from "../utils/uploadToCloudinary.js";
 import cloudinary from "../config/cloudinary.js";
+import generateToken from "../utils/generateToken.js";
 
 export const getAllUsers = async (req, res) => {
 
@@ -156,6 +157,9 @@ export const changeUserPassword = async (req, res) => {
         user.password = newPassword;
 
         await user.save();
+
+        // Re-issue a fresh JWT cookie for the current session
+        generateToken(res, user._id, user.role);
 
         return res.status(200).json({
             message: "Password updated successfully"

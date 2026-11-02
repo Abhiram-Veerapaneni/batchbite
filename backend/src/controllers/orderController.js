@@ -12,7 +12,7 @@ import { ApiError } from "../utils/apiError.js";
 
 import { createRestaurantLedgers, updateRestaurantLedgerStatus } from "./restaurantLedgerController.js";
 
-// Create order -> service after payment is done
+// Create order service with idempotency support
 export const createOrder = async (orderData) => {
 
     const {
@@ -23,8 +23,17 @@ export const createOrder = async (orderData) => {
         deliveryZone,
         totalAmount,
         paymentMethod,
-        payment
+        payment,
+        idempotencyKey
     } = orderData;
+
+    // 1. Idempotency fast check: if order already exists with this key, return it
+    if (idempotencyKey) {
+        const existingOrder = await Order.findOne({ idempotencyKey });
+        if (existingOrder) {
+            return existingOrder;
+        }
+    }
 
     // Validation
     if (
@@ -48,33 +57,69 @@ export const createOrder = async (orderData) => {
     if (!slotDoc) {
         throw new ApiError(404, "Slot not found");
     }
-    // Create order
-    const order = await Order.create({
-        user,
-        restaurantZone,
-        items: items.map((item) => ({
-            restaurantId: item.restaurantId,
-            itemId: item.itemId,
-            name: item.name,
-            image: item.image,
-            isVeg: item.isVeg,
-            price: item.price,
-            quantity: item.quantity,
-            restaurantName: item.restaurantName,
-        })),
-        slot,
-        deliveryZone,
-        totalAmount,
-        canModifyUntil: slotDoc.startTime.getTime() + 5 * 60 * 1000,
-        paymentMethod,
-        paymentStatus,
-        payment
-    });
+
+    // 2. Create order with duplicate key protection
+    let order;
+    try {
+        order = await Order.create({
+            user,
+            restaurantZone,
+            items: items.map((item) => ({
+                restaurantId: item.restaurantId,
+                itemId: item.itemId,
+                name: item.name,
+                image: item.image,
+                isVeg: item.isVeg,
+                price: item.price,
+                quantity: item.quantity,
+                restaurantName: item.restaurantName,
+            })),
+            slot,
+            deliveryZone,
+            totalAmount,
+            canModifyUntil: slotDoc.startTime.getTime() + 5 * 60 * 1000,
+            paymentMethod,
+            paymentStatus,
+            payment,
+            idempotencyKey
+        });
+    } catch (err) {
+        // Race condition: if a duplicate request arrived simultaneously
+        if (err.code === 11000 && idempotencyKey) {
+            const existingOrder = await Order.findOne({ idempotencyKey });
+            if (existingOrder) {
+                return existingOrder;
+            }
+        }
+        throw err;
+    }
 
     await incrementBatchGroup(order, slotDoc);
     await createRestaurantLedgers(order); // with status = "pending"
 
     return order;
+};
+
+// HTTP Route handler for POST /api/orders
+export const createOrderHandler = async (req, res) => {
+    try {
+        const idempotencyKey = req.headers["x-idempotency-key"] || req.body.idempotencyKey;
+
+        const order = await createOrder({
+            user: req.account,
+            ...req.body,
+            idempotencyKey
+        });
+
+        return res.status(201).json({
+            success: true,
+            order
+        });
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({
+            message: error.message || "Failed to create order"
+        });
+    }
 };
 
 // Get order history

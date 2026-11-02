@@ -125,6 +125,12 @@ const orderSchema = new mongoose.Schema(
             ref: "Payment"
         },
 
+        idempotencyKey: {
+            type: String,
+            unique: true,
+            sparse: true
+        }
+
     },
     {
         timestamps: true

@@ -56,7 +56,7 @@ export const createPaymentOrder = asyncHandler(async (req, res) => {
     }
 });
 
-// verify and create order
+// verify and create order with idempotency protection
 export const verifyPayment = asyncHandler(async (req, res) => {
 
     const {
@@ -66,20 +66,46 @@ export const verifyPayment = asyncHandler(async (req, res) => {
         orderData // from frontend
     } = req.body;
 
-    // console.log(req.body);
-
+    // 1. Verify Razorpay cryptographic signature
     const payment = await verifyRazorpayPaymentService({
         razorpay_order_id,
         razorpay_payment_id,
         razorpay_signature
     });
 
-    // create order
+    // 2. Idempotency Check: if this payment is already linked to an order, return existing order immediately
+    if (payment.order) {
+        const existingOrder = await Order.findById(payment.order);
+        if (existingOrder) {
+            return res.status(200).json({
+                success: true,
+                message: "Payment already verified & Order already placed",
+                order: existingOrder
+            });
+        }
+    }
+
+    // 3. Check if an order was already created with this razorpay_order_id as idempotencyKey
+    const existingOrderByKey = await Order.findOne({ idempotencyKey: razorpay_order_id });
+    if (existingOrderByKey) {
+        if (!payment.order) {
+            payment.order = existingOrderByKey._id;
+            await payment.save();
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Payment already verified & Order already placed",
+            order: existingOrderByKey
+        });
+    }
+
+    // 4. First time processing: create order with razorpay_order_id as idempotencyKey
     const order = await createOrder({
         user: req.account,
         ...orderData,
-        payment
-    })
+        payment,
+        idempotencyKey: razorpay_order_id
+    });
 
     payment.order = order._id;
     await payment.save();
